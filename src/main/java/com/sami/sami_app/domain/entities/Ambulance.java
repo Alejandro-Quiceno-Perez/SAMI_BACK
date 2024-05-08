@@ -1,9 +1,8 @@
 package com.sami.sami_app.domain.entities;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,31 +21,33 @@ import lombok.NoArgsConstructor;
 *----------------------------------------------------------------------------------------------------------
 */
 
-@Entity(name = "Ambulance")
+@Entity(name = "ambulance")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ambulance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ambulance")
     private Long idAmbulance;
 
-    @Column(nullable = false, length = 10)
+    @Column(name = "vehicle_plate", nullable = false, length = 10)
     private String vehiclePlate;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "ambulance_type", nullable = false, length = 50)
     private String ambulanceType;
-    @Column(nullable = false)
+
+    @Column(name = "latitude_ambulance", nullable = false)
     private Double latitudeAmbulance;
 
-    @Column(nullable = false)
+    @Column(name = "longitude_ambulance", nullable = false)
     private Double longitudeAmbulance;
 
-    @OneToOne
-    @JoinColumn(name = "driver_id", referencedColumnName = "id_driver")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_driver", referencedColumnName = "id_driver")
     private Driver driver;
 
-    @OneToOne
-    @JoinColumn(name = "emt_id", referencedColumnName = "id_emt")
-    private Emt emt; 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_emt", referencedColumnName = "id_emt")
+    private Emt emt;
 }

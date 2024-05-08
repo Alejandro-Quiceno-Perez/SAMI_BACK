@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +20,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 /*
     This entity is used to create the service, it has ID, location latitude, location length, 
     the state of the service, a text type description.
@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Service{
+public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_service")
@@ -41,23 +41,22 @@ public class Service{
 
     private double longitudeLocation;
 
-
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status_service", nullable = false)
     private StatusService statusService;
 
     @Lob
     private String anamnesis;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id_hospital")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_hospital", referencedColumnName = "id_hospital")
     private Hospital hospital;
 
-    @OneToOne
-    @JoinColumn(referencedColumnName = "id_ambulance")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_ambulance", referencedColumnName = "id_ambulance")
     private Ambulance ambulance;
 
-    @OneToOne
-    @JoinColumn(referencedColumnName = "id_customer")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_customer", referencedColumnName = "id_customer")
     private Customer customer;
 }

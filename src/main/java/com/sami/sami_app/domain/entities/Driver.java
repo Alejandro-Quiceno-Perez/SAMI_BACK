@@ -1,7 +1,8 @@
 package com.sami.sami_app.domain.entities;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,9 +19,10 @@ import jakarta.persistence.OneToOne;
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_driver")
     private Long idDriver;
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id_user")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_id_user", referencedColumnName = "id_user")
     private User user;
 
 }
