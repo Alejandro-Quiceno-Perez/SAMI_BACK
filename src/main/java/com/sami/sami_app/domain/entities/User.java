@@ -29,6 +29,7 @@ The "user" class defines the attributes related to the user, the unique identifi
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
     private Long idUser;
 
     @Column(nullable = false, length = 50)
@@ -37,28 +38,27 @@ public class User {
     @Column(nullable = false, length = 20)
     private String password;
 
-    @Column(length = 30 , nullable = false )
+    @Column(name = "first_name", length = 30, nullable = false)
     private String firstName;
 
-    @Column(length = 30, nullable = false)
+    @Column(name = "last_name", length = 30, nullable = false)
     private String lastName;
 
-   @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false)
     private UserType userType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "rh_type", nullable = false)
     private RhType rhType;
 
     @Column(length = 15, nullable = false)
     private String phone;
 
-
-    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     private Customer customer;
-    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     private Emt emt;
-    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     private Driver driver;
 }

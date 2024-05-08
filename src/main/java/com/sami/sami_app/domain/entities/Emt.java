@@ -1,6 +1,8 @@
 package com.sami.sami_app.domain.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,13 +15,14 @@ import jakarta.persistence.OneToOne;
 *----------------------------------------------------------------------------------------------------------
 */
 
-@Entity(name="emt")
+@Entity(name = "emt")
 public class Emt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_emt")
     private Long idEmt;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id_user")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_id_user", referencedColumnName = "id_user")
     private User user;
 }

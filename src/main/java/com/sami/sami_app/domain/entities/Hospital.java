@@ -1,4 +1,4 @@
-    package com.sami.sami_app.domain.entities;
+package com.sami.sami_app.domain.entities;
 
 import java.util.List;
 
@@ -32,21 +32,22 @@ import lombok.ToString;
 public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_hospital")
     private Long idHospital;
 
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "latitude_location", nullable = false)
     private Double latitudeLocation;
 
-    @Column(nullable = false)
+    @Column(name = "longitude_location", nullable = false)
     private Double longitudeLocation;
 
     @Column(nullable = false, length = 200)
     private String address;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "complexity_grade", nullable = false, length = 50)
     private String complexityGrade;
 
     @Column(nullable = false, length = 100)
