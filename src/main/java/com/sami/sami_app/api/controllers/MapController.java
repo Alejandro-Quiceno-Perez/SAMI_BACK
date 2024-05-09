@@ -2,16 +2,18 @@ package com.sami.sami_app.api.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 import com.sami.sami_app.api.dto.request.LocationsRequest;
+import com.sami.sami_app.infrastructure.AppConfig;
+
+
 
 /**
  * receives the service, ambulance and hospital locations as a LocationsRequest
@@ -22,8 +24,9 @@ import com.sami.sami_app.api.dto.request.LocationsRequest;
 @Controller
 public class MapController {
 
-    @Autowired(required = false)
-    private GeoApiContext geoApiContext;
+    
+    @Autowired
+    private AppConfig appConfig;
 
     @PostMapping("/locations")
     public Map<String, String> getAllLocations(@RequestBody LocationsRequest locationsRequest) {
@@ -46,18 +49,20 @@ public class MapController {
         return locations;
     }
 
+    
     // validated if it received a valid location or if it received any locations
-    private String location(Double latitude, Double longitude) {
-        try {
-            GeocodingResult[] results = GeocodingApi
-                    .reverseGeocode(geoApiContext, new com.google.maps.model.LatLng(latitude, longitude)).await();
-            if (results.length > 0) {
-                return results[0].formattedAddress;
-            } else {
-                return "No results found";
-            }
-        } catch (Exception e) {
-            return "Error while performing geolocation: " + e.getMessage();
+   private String location(Double latitude, Double longitude) {
+    try {
+        GeoApiContext context = new GeoApiContext.Builder().apiKey(appConfig.getGoogleMapsApiKey()).build();
+
+        GeocodingResult[] results = GeocodingApi.reverseGeocode(context, new LatLng(latitude, longitude)).await();
+        if (results.length > 0) {
+            return results[0].formattedAddress;
+        } else {
+            return "No results found";
         }
+    } catch (Exception e) {
+        return "Error while performing geolocation: " + e.getMessage();
     }
+}
 }
