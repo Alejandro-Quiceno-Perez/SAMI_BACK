@@ -12,6 +12,6 @@ public interface CrudService<REQUEST, RESPONSE, TYPE> {
 
     RESPONSE update(REQUEST request, TYPE id);
 
-    void delete(TYPE id);
+    void delete(Long id);
 
 }
