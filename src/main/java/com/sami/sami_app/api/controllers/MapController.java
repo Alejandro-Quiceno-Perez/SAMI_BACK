@@ -6,31 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.google.maps.GeoApiContext;
-import com.google.maps.GeocodingApi;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.LatLng;
 import com.sami.sami_app.api.dto.request.LocationsRequest;
-import com.sami.sami_app.infrastructure.AppConfig;
-
-
-
-/**
- * receives the service, ambulance and hospital locations as a LocationsRequest
- * object. It uses the Google Maps API to get the corresponding addresses from
- * the latitude and longitude coordinates of each location,
- */
+import com.sami.sami_app.infrastructure.abstract_services.IMapService;
 
 @Controller
 public class MapController {
 
-    
     @Autowired
-    private AppConfig appConfig;
+    private IMapService mapService;
 
     @PostMapping("/locations")
     public Map<String, String> getAllLocations(@RequestBody LocationsRequest locationsRequest) {
-        // capture of each location in terms of latitude and longitude
         Double serviceLatitude = locationsRequest.getServiceLatitude();
         Double serviceLongitude = locationsRequest.getServiceLongitude();
         Double ambulanceLatitude = locationsRequest.getAmbulanceLatitude();
@@ -38,31 +24,11 @@ public class MapController {
         Double hospitalLatitude = locationsRequest.getHospitalLatitude();
         Double hospitalLongitude = locationsRequest.getHospitalLongitude();
 
-        // map= key-value mapping --> <String, String>
-        // HashMap= stores the data as pairs --> for each Entity's location
-
         Map<String, String> locations = new HashMap<>();
-        locations.put("Service", location(serviceLatitude, serviceLongitude));
-        locations.put("Ambulance", location(ambulanceLatitude, ambulanceLongitude));
-        locations.put("Hospital", location(hospitalLatitude, hospitalLongitude));
+        locations.put("Service", mapService.getLocationAddress(serviceLatitude, serviceLongitude));
+        locations.put("Ambulance", mapService.getLocationAddress(ambulanceLatitude, ambulanceLongitude));
+        locations.put("Hospital", mapService.getLocationAddress(hospitalLatitude, hospitalLongitude));
 
         return locations;
     }
-
-    
-    // validated if it received a valid location or if it received any locations
-   private String location(Double latitude, Double longitude) {
-    try {
-        GeoApiContext context = new GeoApiContext.Builder().apiKey(appConfig.getGoogleMapsApiKey()).build();
-
-        GeocodingResult[] results = GeocodingApi.reverseGeocode(context, new LatLng(latitude, longitude)).await();
-        if (results.length > 0) {
-            return results[0].formattedAddress;
-        } else {
-            return "No results found";
-        }
-    } catch (Exception e) {
-        return "Error while performing geolocation: " + e.getMessage();
-    }
-}
 }
