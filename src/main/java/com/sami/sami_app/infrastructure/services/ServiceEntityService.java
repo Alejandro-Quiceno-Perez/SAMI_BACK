@@ -19,11 +19,19 @@ public class ServiceEntityService implements IServiceEntityService {
     private final ServiceEntityRepository serviceEntityRepository;
 
 
+    //Pagination
+
     @Override
     public Page<ServiceEntityResponse> getAll(int page, int size,SortType sortType) {
         if (page < 0) page = 0;
         
-        return null;
+        PageRequest pagination = null;
+        switch (sortType) {
+            case NONE -> pagination = PageRequest.of(page, size);
+            case ASC -> pagination = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascendig());
+            case DESC -> pagination = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
+        }
+        return this.serviceEntityRepository.findAll(pagination).map(this::entityToResponse);
     }
 
 
@@ -40,14 +48,22 @@ public class ServiceEntityService implements IServiceEntityService {
         return this.entityToResponse(this.serviceEntityRepository.save(service));
     }
 
+    // Actualizar el servicio 
     @Override
     public ServiceEntityResponse update(ServiceEntityRequest serviceEntityRequest, Long id) {
-        return null;
+        Service service = this.find(id);
+        Service serviceUpdate = this.requestToEntity(serviceEntityRequest);
+
+        serviceUpdate.setIdService(id);
+        
+        return this.entityToResponse(this.serviceEntityRepository.save(serviceUpdate));
     }
 
+
+    // ELiminar Servicio
     @Override
     public void delete(Long id) {
-
+        this.serviceEntityRepository.delete(this.find(id));
     }
 
     @Override
