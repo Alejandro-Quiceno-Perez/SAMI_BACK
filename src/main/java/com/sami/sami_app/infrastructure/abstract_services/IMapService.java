@@ -1,5 +1,11 @@
 package com.sami.sami_app.infrastructure.abstract_services;
 
-public class IMapService {
-    
+import java.util.Map;
+
+import com.sami.sami_app.api.dto.request.LocationsRequest;
+
+public interface IMapService {
+
+    Map<String, String> getEstimatedTime(LocationsRequest locationsRequest); 
+    String getLocationAddress(Double latitude, Double longitude);
 }
