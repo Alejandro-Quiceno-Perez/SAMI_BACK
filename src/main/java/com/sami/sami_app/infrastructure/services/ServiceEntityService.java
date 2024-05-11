@@ -1,18 +1,26 @@
 package com.sami.sami_app.infrastructure.services;
-import com.sami.sami_app.domain.entities.Service;
 
 import com.sami.sami_app.api.dto.request.ServiceEntityRequest;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
+import com.sami.sami_app.domain.entities.Service;
+import com.sami.sami_app.domain.repositories.ServiceEntityRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
+import com.sami.sami_app.util.enums.SortType;
 import com.sami.sami_app.util.enums.StatusService;
 
-import main.java.com.sami.sami_app.util.enums.SortType;
-
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
+// ARREGLAR ESTA IMPORTACION
+@org.springframework.stereotype.Service
+@Transactional
+@AllArgsConstructor
 public class ServiceEntityService implements IServiceEntityService {
 
     @Autowired
@@ -20,20 +28,26 @@ public class ServiceEntityService implements IServiceEntityService {
 
 
     //Pagination
-
     @Override
-    public Page<ServiceEntityResponse> getAll(int page, int size,SortType sortType) {
+    public Page<ServiceEntityResponse> getAll(int page, int size, SortType sortType) {
         if (page < 0) page = 0;
-        
+
         PageRequest pagination = null;
         switch (sortType) {
-            case NONE -> pagination = PageRequest.of(page, size);
-            case ASC -> pagination = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascendig());
-            case DESC -> pagination = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
+            case NONE -> pagination = PageRequest.of(page,size);
+            case ASC -> pagination = PageRequest.of(page,size, Sort.by(FIELD_BY_SORT).ascending());
+            case DESC -> -> pagination = PageRequest.of(page,size, Sort.by(FIELD_BY_SORT).descending());
         }
-        return this.serviceEntityRepository.findAll(pagination).map(this::entityToResponse);
+
+        this.serviceEntityRepository.findAll(pagination)
+
+        return null;
     }
 
+    @Override
+    public Page<ServiceEntityResponse> getAll(int page, int size) {
+        return null;
+    }
 
     // Metodo para buscar por ID
     @Override
