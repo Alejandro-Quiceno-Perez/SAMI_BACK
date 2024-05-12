@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 
 import com.sami.sami_app.util.enums.StatusService;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 @Data
 @Builder
 @NoArgsConstructor
