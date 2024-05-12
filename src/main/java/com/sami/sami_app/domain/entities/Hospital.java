@@ -56,5 +56,5 @@ public class Hospital {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<Service> services;
+    private List<ServiceEntity> serviceEntities;
 }
