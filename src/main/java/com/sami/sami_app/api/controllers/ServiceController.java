@@ -52,7 +52,7 @@ public class ServiceController {
         return ResponseEntity.ok(this.service.getById(id));
     }
 
-     @PostMapping
+     @PostMapping(path = "/create")
     public ResponseEntity<ServiceEntityResponse> create(
        @Validated @RequestBody ServiceEntityRequest request
     ){

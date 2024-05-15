@@ -4,8 +4,7 @@ package com.sami.sami_app.infrastructure.services;
 import com.sami.sami_app.domain.entities.Ambulance;
 import com.sami.sami_app.domain.entities.Hospital;
 import com.sami.sami_app.domain.entities.ServiceEntity;
-import com.sami.sami_app.util.messages.ErrorMessages;
-import org.apache.coyote.BadRequestException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,7 +83,7 @@ public class ServiceEntityService implements IServiceEntityService {
 
     @Override
     public List<ServiceEntityRequest> search(StatusService statusService) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'search'");
     }
 
@@ -95,6 +94,7 @@ public class ServiceEntityService implements IServiceEntityService {
         AmbulanceResponse rAmbulanceResponse =this.ambulanceToResponse(entity.getAmbulance());
 
         return ServiceEntityResponse.builder()
+                .id(entity.getId())
                 .latidudeLocation(entity.getLatitude())
                 .longitudeLocation(entity.getLongitude())
                 .statusService(entity.getStatus())
@@ -106,17 +106,25 @@ public class ServiceEntityService implements IServiceEntityService {
     }
 
     private HospitalResponse hospitalToResponse(Hospital entity){
-        return HospitalResponse.builder()
-        .id(entity.getId())
-        .name(entity.getName())
-        .latitude(entity.getLatitude())
-        .longitude(entity.getLongitude())
-        .address(entity.getAddress())
-        .complexityGrade(entity.getComplexityGrade())
-        .specialty(entity.getSpecialty())
-        .build();
+        // Verificar si el objeto Hospital no es nulo antes de acceder a sus atributos
+        if (entity != null) {
+            return HospitalResponse.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .latitude(entity.getLatitude())
+                .longitude(entity.getLongitude())
+                .address(entity.getAddress())
+                .complexityGrade(entity.getComplexityGrade())
+                .specialty(entity.getSpecialty())
+                .build();
+        } else {
+            // Si el objeto Hospital es nulo, puedes devolver un HospitalResponse vacío o null
+            return HospitalResponse.builder().build();
+        }
     }
+    
     private AmbulanceResponse  ambulanceToResponse(Ambulance entity){
+        if (entity != null) {
         return AmbulanceResponse.builder()
         .id(entity.getId())
         .ambulanceType(entity.getAmbulanceType())
@@ -125,11 +133,17 @@ public class ServiceEntityService implements IServiceEntityService {
         .latitude(entity.getLatitude())
         .longitude(entity.getLongitude())
         .build();
+        }
+        else {
+            
+            return AmbulanceResponse.builder().build();
+        }
     }
 
     private ServiceEntity requestToEntity(ServiceEntityRequest request){
 
         return ServiceEntity.builder()
+                
                 .latitude(request.getLatidudeLocation())
                 .longitude(request.getLongitudeLocation())
                 .status(request.getStatusService())

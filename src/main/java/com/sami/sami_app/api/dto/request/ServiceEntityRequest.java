@@ -8,17 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import com.sami.sami_app.util.enums.StatusService;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
-
-import lombok.Data;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.DecimalMin;
@@ -29,6 +18,7 @@ import jakarta.validation.constraints.DecimalMax;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceEntityRequest {
+    private long id;
     @DecimalMin(value = "-90.0", inclusive = true, message = "Latitude must be between -90 and 90")
     @DecimalMax(value = "90.0", inclusive = true, message = "Latitude must be between -90 and 90")
     private double latidudeLocation;

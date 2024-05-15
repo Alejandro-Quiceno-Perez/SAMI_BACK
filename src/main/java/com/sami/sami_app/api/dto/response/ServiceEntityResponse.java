@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ServiceEntityResponse {
+    private long id;
     private double latidudeLocation;
     private double longitudeLocation;
     private StatusService statusService;
