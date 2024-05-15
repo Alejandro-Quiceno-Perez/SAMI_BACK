@@ -1,6 +1,8 @@
 package com.sami.sami_app.infrastructure.services;
 
 
+import com.sami.sami_app.domain.entities.Ambulance;
+import com.sami.sami_app.domain.entities.Hospital;
 import com.sami.sami_app.domain.entities.ServiceEntity;
 import com.sami.sami_app.util.messages.ErrorMessages;
 import org.apache.coyote.BadRequestException;
@@ -11,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.sami.sami_app.api.dto.request.ServiceEntityRequest;
+import com.sami.sami_app.api.dto.response.AmbulanceResponse;
+import com.sami.sami_app.api.dto.response.HospitalResponse;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
 import com.sami.sami_app.domain.repositories.ServiceEntityRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
@@ -37,7 +41,7 @@ public class ServiceEntityService implements IServiceEntityService {
     public Page<ServiceEntityResponse> getAll(int page, int size, SortType sortType) {
         if (page < 0) page = 0;
 
-        PageRequest pagination = null;
+        PageRequest pagination = PageRequest.of(page, size);
 
         switch (sortType) {
             case NONE -> pagination = PageRequest.of(page, size);
@@ -68,7 +72,7 @@ public class ServiceEntityService implements IServiceEntityService {
     public ServiceEntityResponse update(ServiceEntityRequest serviceEntityRequest, Long id) {
         
         ServiceEntity serviceUpdate = this.requestToEntity(serviceEntityRequest);
-        serviceUpdate.setIdService(id);
+        serviceUpdate.setId(id);
 
         return this.entityToResp(this.serviceEntityRepository.save(serviceUpdate));
     }
@@ -87,23 +91,48 @@ public class ServiceEntityService implements IServiceEntityService {
 
     private ServiceEntityResponse entityToResp(ServiceEntity entity){
 
+        HospitalResponse rHospitalResponse = this.hospitalToResponse(entity.getHospital());
+        AmbulanceResponse rAmbulanceResponse =this.ambulanceToResponse(entity.getAmbulance());
+
         return ServiceEntityResponse.builder()
-                .latidudeLocation(entity.getLatidudeLocation())
-                .longitudeLocation(entity.getLongitudeLocation())
-                .statusService(entity.getStatusService())
+                .latidudeLocation(entity.getLatitude())
+                .longitudeLocation(entity.getLongitude())
+                .statusService(entity.getStatus())
                 .anamnesis(entity.getAnamnesis())
-                .hospital(entity.getHospital())
-                .ambulance(entity.getAmbulance())
-                .customer(entity.getCustomer())
+                .hospital(rHospitalResponse)
+                .ambulance(rAmbulanceResponse)
+                
                 .build();
+    }
+
+    private HospitalResponse hospitalToResponse(Hospital entity){
+        return HospitalResponse.builder()
+        .id(entity.getId())
+        .name(entity.getName())
+        .latitude(entity.getLatitude())
+        .longitude(entity.getLongitude())
+        .address(entity.getAddress())
+        .complexityGrade(entity.getComplexityGrade())
+        .specialty(entity.getSpecialty())
+        .build();
+    }
+    private AmbulanceResponse  ambulanceToResponse(Ambulance entity){
+        return AmbulanceResponse.builder()
+        .id(entity.getId())
+        .ambulanceType(entity.getAmbulanceType())
+        .vehiclePlate(entity.getVehiclePlate())
+        .status(entity.getStatus())
+        .latitude(entity.getLatitude())
+        .longitude(entity.getLongitude())
+        .build();
     }
 
     private ServiceEntity requestToEntity(ServiceEntityRequest request){
 
         return ServiceEntity.builder()
-                .latidudeLocation(request.getLatidudeLocation())
-                .longitudeLocation(request.getLongitudeLocation())
-                .statusService(request.getStatusService())
+                .latitude(request.getLatidudeLocation())
+                .longitude(request.getLongitudeLocation())
+                .status(request.getStatusService())
                 .anamnesis(request.getAnamnesis())
                 .build();
 
