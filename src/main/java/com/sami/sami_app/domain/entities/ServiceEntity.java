@@ -13,9 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-
-import jakarta.persistence.OneToOne;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +25,8 @@ import lombok.NoArgsConstructor;
     one-to-one with client.... Which allows a relationship between the Service entity and the 
     other entities.
  */
-@Entity(name = "service")
+
+@Entity(name = "Service")
 @Data
 @Builder
 @AllArgsConstructor
@@ -37,28 +35,30 @@ public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_service")
-    private Long idService;
+    private Long id;
 
-    private double latidudeLocation;
+    @Column(name = "latitude_location")
+    private double latitude;
 
-    private double longitudeLocation;
+    @Column(name = "longitude_location")
+    private double longitude;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status_service", nullable = false)
-    private StatusService statusService;
+    private StatusService status;
 
     @Lob
     private String anamnesis;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_id_hospital", referencedColumnName = "id_hospital")
-    private Hospital hospital;
-
-    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_ambulance", referencedColumnName = "id_ambulance")
     private Ambulance ambulance;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_id_customer", referencedColumnName = "id_customer")
-    private Customer customer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_hospital", referencedColumnName = "id_hospital")
+    private Hospital hospital;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_id_client", referencedColumnName = "id_user")
+    private User client;
 }

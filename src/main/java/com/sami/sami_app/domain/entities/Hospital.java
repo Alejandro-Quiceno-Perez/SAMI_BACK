@@ -25,7 +25,7 @@ import lombok.ToString;
 *------------------------------------------------------------------------------------------------------------------------
 */
 
-@Entity(name = "hospital")
+@Entity(name = "Hospital")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,16 +33,16 @@ public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_hospital")
-    private Long idHospital;
+    private Long id;
 
     @Column(nullable = false, length = 100)
     private String name;
 
     @Column(name = "latitude_location", nullable = false)
-    private Double latitudeLocation;
+    private Double latitude;
 
     @Column(name = "longitude_location", nullable = false)
-    private Double longitudeLocation;
+    private Double longitude;
 
     @Column(nullable = false, length = 200)
     private String address;
@@ -50,11 +50,11 @@ public class Hospital {
     @Column(name = "complexity_grade", nullable = false, length = 50)
     private String complexityGrade;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String specialty;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<ServiceEntity> serviceEntities;
+    private List<ServiceEntity> services;
 }
