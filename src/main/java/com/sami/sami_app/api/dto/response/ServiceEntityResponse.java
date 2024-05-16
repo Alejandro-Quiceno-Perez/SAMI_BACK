@@ -19,5 +19,6 @@ public class ServiceEntityResponse {
     private String anamnesis;
     private HospitalResponse hospital;
     private AmbulanceResponse ambulance;
+    //private UserResponse user;
    
 }

@@ -92,6 +92,8 @@ public class ServiceEntityService implements IServiceEntityService {
 
         HospitalResponse rHospitalResponse = this.hospitalToResponse(entity.getHospital());
         AmbulanceResponse rAmbulanceResponse =this.ambulanceToResponse(entity.getAmbulance());
+        //UserResponse rUserResponse =this.UserToResponse(entity.getUser());
+
 
         return ServiceEntityResponse.builder()
                 .id(entity.getId())
@@ -101,6 +103,7 @@ public class ServiceEntityService implements IServiceEntityService {
                 .anamnesis(entity.getAnamnesis())
                 .hospital(rHospitalResponse)
                 .ambulance(rAmbulanceResponse)
+                
                 
                 .build();
     }
@@ -139,6 +142,17 @@ public class ServiceEntityService implements IServiceEntityService {
             return AmbulanceResponse.builder().build();
         }
     }
+   /*  private UserResponse  userToResponse(User entity){
+        if (entity != null) {
+        return UserResponse.builder()
+        
+        .build();
+        }
+        else {
+            
+            return UserResponse.builder().build();
+        }
+    } */
 
     private ServiceEntity requestToEntity(ServiceEntityRequest request){
 
