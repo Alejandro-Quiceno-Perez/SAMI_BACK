@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 public class RegisterRequest {
     @NotBlank(message = "The user is required")
     @Size(min = 3, max = 100, message = "Username must be between 3 and 150 characters")
-    private String userName;
+    private String email;
     @NotBlank(message = "The password is required")
     @Size(min = 3, max = 100, message = "Password must be between 3 and 150 characters")
     private String password;

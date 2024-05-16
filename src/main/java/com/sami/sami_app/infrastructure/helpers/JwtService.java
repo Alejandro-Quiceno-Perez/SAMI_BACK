@@ -1,6 +1,7 @@
 package com.sami.sami_app.infrastructure.helpers;
 
-import com.sami.sami_app.domain.entities.User;
+
+import com.sami.sami_app.domain.entities.Account;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
@@ -26,22 +27,21 @@ public class JwtService {
     }
 
     // constuir JWT
-    public String getToken(Map <String, Object> claims, User user) {
+    public String getToken(Map <String, Object> claims, Account account) {
         return Jwts.builder()
                 .claims(claims) // cuerpo jwt
-                .subject(user.getFirstName()) // de quien es el JWT
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(this.getKey()) // firma token
                 .compact();
     }
 
-    public String getToken (User user) {
+    public String getToken (Account account) {
         // map
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", user.getId());
-        claims.put("role", user.getRole().name());
+        claims.put("id", account.getId());
+        claims.put("role", account.getRole().name());
 
-        return getToken(claims, user);
+        return getToken(claims, account);
     }
 }
