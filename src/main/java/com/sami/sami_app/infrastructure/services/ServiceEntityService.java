@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.sami.sami_app.api.dto.request.ServiceEntityRequest;
 import com.sami.sami_app.api.dto.response.AmbulanceResponse;
-import com.sami.sami_app.api.dto.response.HospitalResponse;
+import com.sami.sami_app.api.dto.response.HospitalBasicResponse;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
 import com.sami.sami_app.domain.repositories.ServiceEntityRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
@@ -91,7 +91,7 @@ public class ServiceEntityService implements IServiceEntityService {
 
     private ServiceEntityResponse entityToResp(ServiceEntity entity){
 
-        HospitalResponse rHospitalResponse = this.hospitalToResponse(entity.getHospital());
+        HospitalBasicResponse rHospitalResponse = this.hospitalToResponse(entity.getHospital());
         AmbulanceResponse rAmbulanceResponse =this.ambulanceToResponse(entity.getAmbulance());
 
         return ServiceEntityResponse.builder()
@@ -105,8 +105,8 @@ public class ServiceEntityService implements IServiceEntityService {
                 .build();
     }
 
-    private HospitalResponse hospitalToResponse(Hospital entity){
-        return HospitalResponse.builder()
+    private HospitalBasicResponse hospitalToResponse(Hospital entity){
+        return HospitalBasicResponse.builder()
         .id(entity.getId())
         .name(entity.getName())
         .latitude(entity.getLatitude())
