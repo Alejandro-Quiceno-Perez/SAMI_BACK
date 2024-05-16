@@ -17,6 +17,7 @@ import com.sami.sami_app.api.dto.request.LocationsRequest;
 import com.sami.sami_app.infrastructure.AppConfig;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
 
+
 @Service
 public class MapService implements IMapService {
 
@@ -70,4 +71,18 @@ public class MapService implements IMapService {
         return result;
     }
 
+    // Nuevo método para obtener la posición
+    public String getPosition(Double latitude, Double longitude) {
+        try {
+            GeocodingResult[] results = GeocodingApi.reverseGeocode(geoApiContext, new LatLng(latitude, longitude))
+                    .await();
+            if (results.length > 0) {
+                return results[0].geometry.location.toString();
+            } else {
+                return "No se encontraron resultados";
+            }
+        } catch (Exception e) {
+            return "Error al realizar la geolocalización: " + e.getMessage();
+        }
+    }
 }
