@@ -21,5 +21,6 @@ public class AmbulanceResponse {
     private StatusAmbulance status;
     private Double latitude;
     private Double longitude;
-    
+    private UserResponse driver;
+    private UserResponse emt;
 }
