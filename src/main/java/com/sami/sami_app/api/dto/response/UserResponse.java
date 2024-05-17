@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponse {
-    private long id;
+    private long idUser;
     private String firstName;
     private String lastName;
     private String phone;

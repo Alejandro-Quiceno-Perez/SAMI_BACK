@@ -35,7 +35,7 @@ public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_service")
-    private Long id;
+    private Long idService;
 
     @Column(name = "latitude_location")
     private double latitude;

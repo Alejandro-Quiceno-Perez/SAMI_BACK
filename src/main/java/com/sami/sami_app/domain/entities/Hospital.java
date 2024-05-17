@@ -33,7 +33,7 @@ public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_hospital")
-    private Long id;
+    private Long idHospital;
 
     @Column(nullable = false, length = 100)
     private String name;

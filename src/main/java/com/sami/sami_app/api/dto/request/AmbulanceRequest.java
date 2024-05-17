@@ -28,7 +28,7 @@ public class AmbulanceRequest {
     @NotNull(message = "The longitude is required")
     private Double longitude;
     @NotNull(message = "The driver Id is required")
-    private Long driverId;
+    private Long idDriver;
     @NotNull(message = "The emt Id is required")
-    private Long emtId;
+    private Long idEmt;
 }

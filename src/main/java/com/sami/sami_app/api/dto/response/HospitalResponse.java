@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HospitalResponse {
-    private Long id;
+    private Long idHospital;
     private String name;
     private Double latitude;
     private Double longitude;
     private String address;
     private String complexityGrade;
-    private String specialty; 
+    private String specialty;
     private List<ServicesInHospital> services;
 }
