@@ -16,14 +16,12 @@ import org.springframework.stereotype.Service;
 import com.sami.sami_app.api.dto.request.ServiceEntityRequest;
 import com.sami.sami_app.api.dto.response.AmbulanceResponse;
 import com.sami.sami_app.api.dto.response.HospitalBasicResponse;
-import com.sami.sami_app.api.dto.response.HospitalResponse;
-import com.sami.sami_app.api.dto.response.HospitalsInService;
-import com.sami.sami_app.api.dto.response.HospitalsInServiceResponse;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
-import com.sami.sami_app.api.dto.response.ServicesInHospital;
-import com.sami.sami_app.api.dto.response.ServicesInServices;
 import com.sami.sami_app.api.dto.response.UserResponse;
+import com.sami.sami_app.domain.repositories.AmbulanceRepository;
+import com.sami.sami_app.domain.repositories.HospitalRepository;
 import com.sami.sami_app.domain.repositories.ServiceEntityRepository;
+import com.sami.sami_app.domain.repositories.UserRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
 import com.sami.sami_app.util.enums.SortType;
 import com.sami.sami_app.util.enums.StatusService;
@@ -43,6 +41,14 @@ public class ServiceEntityService implements IServiceEntityService {
 
     @Autowired
     private final ServiceEntityRepository serviceEntityRepository;
+    @Autowired
+    private final AmbulanceRepository ambulanceRepository;
+    @Autowired
+    private final HospitalRepository hospitalRepository;
+    @Autowired
+    private final UserRepository userRepository;
+
+    
 
     @Override
     public Page<ServiceEntityResponse> getAll(int page, int size, SortType sortType) {
@@ -58,30 +64,31 @@ public class ServiceEntityService implements IServiceEntityService {
 
 
         return this.serviceEntityRepository.findAll(pagination)
-                .map(this::entityToResp);
+                .map(this::entityToResponse);
 
     }
 
     @Override
     public ServiceEntityResponse getById(Long id) {
-        return null;
+        return entityToResponse(this.find(id));
     }
 
 
     @Override
     public ServiceEntityResponse create(ServiceEntityRequest request) {
         ServiceEntity service = this.requestToEntity(request);
-
-        return this.entityToResp(this.serviceEntityRepository.save(service));
+    
+        return this.entityToResponse(this.serviceEntityRepository.save(service));
     }
 
     @Override
     public ServiceEntityResponse update(ServiceEntityRequest serviceEntityRequest, Long id) {
         
-        ServiceEntity serviceUpdate = this.requestToEntity(serviceEntityRequest);
-        serviceUpdate.setId(id);
+        ServiceEntity service = this.find(id);
+        service = this.requestToEntity(serviceEntityRequest);
+        service.setId(id);
+        return this.entityToResponse(this.serviceEntityRepository.save(service));
 
-        return this.entityToResp(this.serviceEntityRepository.save(serviceUpdate));
     }
 
     @Override
@@ -96,25 +103,34 @@ public class ServiceEntityService implements IServiceEntityService {
     }
 
 
-    private ServiceEntityResponse entityToResp(ServiceEntity entity){
+    private ServiceEntityResponse entityToResponse(ServiceEntity entity){
 
       
         return ServiceEntityResponse.builder()
+                .id(entity.getId())
                 .latidudeLocation(entity.getLatitude())
                 .longitudeLocation(entity.getLongitude())
                 .statusService(entity.getStatus())
                 .anamnesis(entity.getAnamnesis())
-                .hospital(entity.getHospital())
-                .ambulance(entity.getAmbulance())
-                .client(entity.getClient())
+                .hospital(hospitalToResponse(entity.getHospital()))
+                .ambulance(ambulanceToResponse(entity.getAmbulance()))
+                .client(userToResponse(entity.getClient()))
                 
                 .build();
     }
 
     private ServiceEntity requestToEntity(ServiceEntityRequest request){
-        ServiceEntity service = new ServiceEntity();
-        BeanUtils.copyProperties(request, service);
-        return  service;
+
+        return  ServiceEntity.builder()
+        .id(request.getId())
+        .latitude(request.getLatidudeLocation())
+        .longitude(request.getLongitudeLocation())
+        .status(request.getStatusService())
+        .anamnesis(request.getAnamnesis())
+        .ambulance(this.ambulanceRepository.findById(request.getIdAmbulance()).orElseThrow())
+        .hospital(this.hospitalRepository.findById(request.getIdHospital()).orElseThrow())
+        .client(this.userRepository.findById(request.getIdClient()).orElseThrow())
+        .build();
     }
 
 
@@ -126,36 +142,21 @@ public class ServiceEntityService implements IServiceEntityService {
     /*-
      * ESPECIFIC METHODS
      */
+   
 
-
-    
-    private ServicesInHospital serviceToResponse(ServiceEntity serviceEntity) {
-        return ServicesInHospital
-                .builder()
-                .id(serviceEntity.getId())
-                .latitude(serviceEntity.getLatitude())
-                .longitude(serviceEntity.getLongitude())
-                .status(serviceEntity.getStatus())
-                .anamnesis(serviceEntity.getAnamnesis())
-                .ambulance(ambulanceToResponse(serviceEntity.getAmbulance()))
-                .client(userToResponse(serviceEntity.getClient()))
+    private AmbulanceResponse ambulanceToResponse(Ambulance entity) {
+        return AmbulanceResponse.builder()
+                .id(entity.getId())
+                .vehiclePlate(entity.getVehiclePlate())
+                .ambulanceType(entity.getAmbulanceType())
+                .status(entity.getStatus())
+                .latitude(entity.getLatitude())
+                .longitude(entity.getLongitude())
+                .emt(userToResponse(entity.getEmt()))
+                .driver(userToResponse(entity.getDriver()))
                 .build();
     }
 
-   
-
-
-    private AmbulanceResponse ambulanceToResponse(Ambulance entity) {
-        AmbulanceResponse ambulanceResponse = new AmbulanceResponse();
-        BeanUtils.copyProperties(entity, ambulanceResponse);
-        return ambulanceResponse;
-    
-    }
-
-
-
-
-    
 
     private UserResponse userToResponse(User entity) {
         UserResponse userResponse = new UserResponse();
@@ -164,14 +165,12 @@ public class ServiceEntityService implements IServiceEntityService {
     }
 
 
-
     private HospitalBasicResponse hospitalToResponse(Hospital entity) {
         HospitalBasicResponse hospitalResponse = new HospitalBasicResponse();
         BeanUtils.copyProperties(entity, hospitalResponse);
         return hospitalResponse;
         
     }
-
 
 
 

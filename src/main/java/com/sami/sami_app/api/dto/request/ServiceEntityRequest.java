@@ -1,7 +1,5 @@
 package com.sami.sami_app.api.dto.request;
 
-import com.sami.sami_app.domain.entities.Ambulance;
-import com.sami.sami_app.domain.entities.Hospital;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +16,7 @@ import jakarta.validation.constraints.DecimalMax;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceEntityRequest {
-    private long id;
+    private Long id;
     @DecimalMin(value = "-90.0", inclusive = true, message = "Latitude must be between -90 and 90")
     @DecimalMax(value = "90.0", inclusive = true, message = "Latitude must be between -90 and 90")
     private double latidudeLocation;
@@ -32,9 +30,12 @@ public class ServiceEntityRequest {
     @Size(max = 500, message = "The anamnesis must have a maximum of 500 characters")
     private String anamnesis;
 
-    @NotNull(message = "Hospital is necesary")
-    private Hospital hospital;
+    @NotNull(message = "the ID of the Hospital is necessary")
+    private Long idHospital;
 
-    @NotNull(message = "Ambulance is necesary")
-    private Ambulance ambulance;
+    @NotNull(message = "the ID of the Ambulance is necessary")
+    private Long idAmbulance;
+
+    @NotNull(message = "the ID of the client is necessary")
+    private Long idClient;
 }

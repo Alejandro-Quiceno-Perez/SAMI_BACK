@@ -54,7 +54,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/update/{id}")
     public ResponseEntity<UserResponse> update(
             @Validated @RequestBody UserRequest request,
             @PathVariable Long id) {

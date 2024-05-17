@@ -46,9 +46,8 @@ public class ServiceController {
         return ResponseEntity.ok(this.service.getAll(page -1, size, sortType));
     }
     
-
-     @GetMapping(path = "/{id}")
-    public ResponseEntity<ServiceEntityResponse> get(@PathVariable Long id){
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<ServiceEntityResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(this.service.getById(id));
     }
 
