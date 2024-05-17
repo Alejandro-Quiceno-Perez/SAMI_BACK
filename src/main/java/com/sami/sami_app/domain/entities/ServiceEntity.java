@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
     other entities.
  */
 
-@Entity(name = "Service")
+@Entity(name = "service")
 @Data
 @Builder
 @AllArgsConstructor

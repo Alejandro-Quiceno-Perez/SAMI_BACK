@@ -25,7 +25,7 @@ import lombok.ToString;
 *------------------------------------------------------------------------------------------------------------------------
 */
 
-@Entity(name = "Hospital")
+@Entity(name = "hospital")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
