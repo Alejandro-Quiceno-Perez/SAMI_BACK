@@ -5,9 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.sami.sami_app.domain.entities.Ambulance;
 
-
-
 @Repository
-public interface AmbulanceRepository  extends JpaRepository <Ambulance,Long>{
-    
+public interface AmbulanceRepository extends JpaRepository<Ambulance, Long> {
 }

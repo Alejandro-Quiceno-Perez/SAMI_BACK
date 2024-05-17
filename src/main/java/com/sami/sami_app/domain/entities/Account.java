@@ -1,7 +1,5 @@
 package com.sami.sami_app.domain.entities;
 
-import java.util.UUID;
-
 import com.sami.sami_app.util.enums.Role;
 
 import jakarta.persistence.CascadeType;
