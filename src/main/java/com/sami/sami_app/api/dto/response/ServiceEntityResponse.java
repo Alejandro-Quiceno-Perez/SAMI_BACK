@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ServiceEntityResponse {
+    private long id;
     private double latidudeLocation;
     private double longitudeLocation;
     private StatusService statusService;
     private String anamnesis;
-    private HospitalResponse hospital;
+    private HospitalBasicResponse hospital;
     private AmbulanceResponse ambulance;
+    private UserResponse client;
    
 }

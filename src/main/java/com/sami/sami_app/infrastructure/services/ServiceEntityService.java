@@ -4,8 +4,9 @@ package com.sami.sami_app.infrastructure.services;
 import com.sami.sami_app.domain.entities.Ambulance;
 import com.sami.sami_app.domain.entities.Hospital;
 import com.sami.sami_app.domain.entities.ServiceEntity;
-import com.sami.sami_app.util.messages.ErrorMessages;
-import org.apache.coyote.BadRequestException;
+import com.sami.sami_app.domain.entities.User;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,9 +15,13 @@ import org.springframework.stereotype.Service;
 
 import com.sami.sami_app.api.dto.request.ServiceEntityRequest;
 import com.sami.sami_app.api.dto.response.AmbulanceResponse;
-import com.sami.sami_app.api.dto.response.HospitalResponse;
+import com.sami.sami_app.api.dto.response.HospitalBasicResponse;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
+import com.sami.sami_app.api.dto.response.UserResponse;
+import com.sami.sami_app.domain.repositories.AmbulanceRepository;
+import com.sami.sami_app.domain.repositories.HospitalRepository;
 import com.sami.sami_app.domain.repositories.ServiceEntityRepository;
+import com.sami.sami_app.domain.repositories.UserRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
 import com.sami.sami_app.util.enums.SortType;
 import com.sami.sami_app.util.enums.StatusService;
@@ -36,12 +41,20 @@ public class ServiceEntityService implements IServiceEntityService {
 
     @Autowired
     private final ServiceEntityRepository serviceEntityRepository;
+    @Autowired
+    private final AmbulanceRepository ambulanceRepository;
+    @Autowired
+    private final HospitalRepository hospitalRepository;
+    @Autowired
+    private final UserRepository userRepository;
+
+    
 
     @Override
     public Page<ServiceEntityResponse> getAll(int page, int size, SortType sortType) {
         if (page < 0) page = 0;
 
-        PageRequest pagination = PageRequest.of(page, size);
+        PageRequest pagination = null;
 
         switch (sortType) {
             case NONE -> pagination = PageRequest.of(page, size);
@@ -51,30 +64,31 @@ public class ServiceEntityService implements IServiceEntityService {
 
 
         return this.serviceEntityRepository.findAll(pagination)
-                .map(this::entityToResp);
+                .map(this::entityToResponse);
 
     }
 
     @Override
     public ServiceEntityResponse getById(Long id) {
-        return null;
+        return entityToResponse(this.find(id));
     }
 
 
     @Override
     public ServiceEntityResponse create(ServiceEntityRequest request) {
         ServiceEntity service = this.requestToEntity(request);
-
-        return this.entityToResp(this.serviceEntityRepository.save(service));
+    
+        return this.entityToResponse(this.serviceEntityRepository.save(service));
     }
 
     @Override
     public ServiceEntityResponse update(ServiceEntityRequest serviceEntityRequest, Long id) {
         
-        ServiceEntity serviceUpdate = this.requestToEntity(serviceEntityRequest);
-        serviceUpdate.setId(id);
+        ServiceEntity service = this.find(id);
+        service = this.requestToEntity(serviceEntityRequest);
+        service.setId(id);
+        return this.entityToResponse(this.serviceEntityRepository.save(service));
 
-        return this.entityToResp(this.serviceEntityRepository.save(serviceUpdate));
     }
 
     @Override
@@ -89,58 +103,75 @@ public class ServiceEntityService implements IServiceEntityService {
     }
 
 
-    private ServiceEntityResponse entityToResp(ServiceEntity entity){
+    private ServiceEntityResponse entityToResponse(ServiceEntity entity){
 
-        HospitalResponse rHospitalResponse = this.hospitalToResponse(entity.getHospital());
-        AmbulanceResponse rAmbulanceResponse =this.ambulanceToResponse(entity.getAmbulance());
-
+      
         return ServiceEntityResponse.builder()
+                .id(entity.getId())
                 .latidudeLocation(entity.getLatitude())
                 .longitudeLocation(entity.getLongitude())
                 .statusService(entity.getStatus())
                 .anamnesis(entity.getAnamnesis())
-                .hospital(rHospitalResponse)
-                .ambulance(rAmbulanceResponse)
+                .hospital(hospitalToResponse(entity.getHospital()))
+                .ambulance(ambulanceToResponse(entity.getAmbulance()))
+                .client(userToResponse(entity.getClient()))
                 
                 .build();
     }
 
-    private HospitalResponse hospitalToResponse(Hospital entity){
-        return HospitalResponse.builder()
-        .id(entity.getId())
-        .name(entity.getName())
-        .latitude(entity.getLatitude())
-        .longitude(entity.getLongitude())
-        .address(entity.getAddress())
-        .complexityGrade(entity.getComplexityGrade())
-        .specialty(entity.getSpecialty())
-        .build();
-    }
-    private AmbulanceResponse  ambulanceToResponse(Ambulance entity){
-        return AmbulanceResponse.builder()
-        .id(entity.getId())
-        .ambulanceType(entity.getAmbulanceType())
-        .vehiclePlate(entity.getVehiclePlate())
-        .status(entity.getStatus())
-        .latitude(entity.getLatitude())
-        .longitude(entity.getLongitude())
-        .build();
-    }
-
     private ServiceEntity requestToEntity(ServiceEntityRequest request){
 
-        return ServiceEntity.builder()
-                .latitude(request.getLatidudeLocation())
-                .longitude(request.getLongitudeLocation())
-                .status(request.getStatusService())
-                .anamnesis(request.getAnamnesis())
-                .build();
-
+        return  ServiceEntity.builder()
+        .id(request.getId())
+        .latitude(request.getLatidudeLocation())
+        .longitude(request.getLongitudeLocation())
+        .status(request.getStatusService())
+        .anamnesis(request.getAnamnesis())
+        .ambulance(this.ambulanceRepository.findById(request.getIdAmbulance()).orElseThrow())
+        .hospital(this.hospitalRepository.findById(request.getIdHospital()).orElseThrow())
+        .client(this.userRepository.findById(request.getIdClient()).orElseThrow())
+        .build();
     }
+
 
     private ServiceEntity find(Long id) {
         return this.serviceEntityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró el servicio con el ID: " + id));
     }
+
+    /*-
+     * ESPECIFIC METHODS
+     */
+   
+
+    private AmbulanceResponse ambulanceToResponse(Ambulance entity) {
+        return AmbulanceResponse.builder()
+                .id(entity.getId())
+                .vehiclePlate(entity.getVehiclePlate())
+                .ambulanceType(entity.getAmbulanceType())
+                .status(entity.getStatus())
+                .latitude(entity.getLatitude())
+                .longitude(entity.getLongitude())
+                .emt(userToResponse(entity.getEmt()))
+                .driver(userToResponse(entity.getDriver()))
+                .build();
+    }
+
+
+    private UserResponse userToResponse(User entity) {
+        UserResponse userResponse = new UserResponse();
+        BeanUtils.copyProperties(entity, userResponse);
+        return userResponse;
+    }
+
+
+    private HospitalBasicResponse hospitalToResponse(Hospital entity) {
+        HospitalBasicResponse hospitalResponse = new HospitalBasicResponse();
+        BeanUtils.copyProperties(entity, hospitalResponse);
+        return hospitalResponse;
+        
+    }
+
+
 
 }
