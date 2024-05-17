@@ -4,7 +4,9 @@ package com.sami.sami_app.infrastructure.services;
 import com.sami.sami_app.domain.entities.Ambulance;
 import com.sami.sami_app.domain.entities.Hospital;
 import com.sami.sami_app.domain.entities.ServiceEntity;
+import com.sami.sami_app.domain.entities.User;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +16,13 @@ import org.springframework.stereotype.Service;
 import com.sami.sami_app.api.dto.request.ServiceEntityRequest;
 import com.sami.sami_app.api.dto.response.AmbulanceResponse;
 import com.sami.sami_app.api.dto.response.HospitalBasicResponse;
+import com.sami.sami_app.api.dto.response.HospitalResponse;
+import com.sami.sami_app.api.dto.response.HospitalsInService;
+import com.sami.sami_app.api.dto.response.HospitalsInServiceResponse;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
+import com.sami.sami_app.api.dto.response.ServicesInHospital;
+import com.sami.sami_app.api.dto.response.ServicesInServices;
+import com.sami.sami_app.api.dto.response.UserResponse;
 import com.sami.sami_app.domain.repositories.ServiceEntityRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
 import com.sami.sami_app.util.enums.SortType;
@@ -40,7 +48,7 @@ public class ServiceEntityService implements IServiceEntityService {
     public Page<ServiceEntityResponse> getAll(int page, int size, SortType sortType) {
         if (page < 0) page = 0;
 
-        PageRequest pagination = PageRequest.of(page, size);
+        PageRequest pagination = null;
 
         switch (sortType) {
             case NONE -> pagination = PageRequest.of(page, size);
@@ -83,102 +91,88 @@ public class ServiceEntityService implements IServiceEntityService {
 
     @Override
     public List<ServiceEntityRequest> search(StatusService statusService) {
-
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'search'");
     }
 
 
     private ServiceEntityResponse entityToResp(ServiceEntity entity){
 
-        HospitalBasicResponse rHospitalResponse = this.hospitalToResponse(entity.getHospital());
-        AmbulanceResponse rAmbulanceResponse =this.ambulanceToResponse(entity.getAmbulance());
-        //UserResponse rUserResponse =this.UserToResponse(entity.getUser());
-
-
+      
         return ServiceEntityResponse.builder()
-                .id(entity.getId())
                 .latidudeLocation(entity.getLatitude())
                 .longitudeLocation(entity.getLongitude())
                 .statusService(entity.getStatus())
                 .anamnesis(entity.getAnamnesis())
-                .hospital(rHospitalResponse)
-                .ambulance(rAmbulanceResponse)
-                
+                .hospital(entity.getHospital())
+                .ambulance(entity.getAmbulance())
+                .client(entity.getClient())
                 
                 .build();
     }
-
-    private HospitalResponse hospitalToResponse(Hospital entity){
-        // Verificar si el objeto Hospital no es nulo antes de acceder a sus atributos
-        if (entity != null) {
-            return HospitalResponse.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .latitude(entity.getLatitude())
-                .longitude(entity.getLongitude())
-                .address(entity.getAddress())
-                .complexityGrade(entity.getComplexityGrade())
-                .specialty(entity.getSpecialty())
-                .build();
-        } else {
-            // Si el objeto Hospital es nulo, puedes devolver un HospitalResponse vacío o null
-            return HospitalResponse.builder().build();
-        }
-    private HospitalBasicResponse hospitalToResponse(Hospital entity){
-        return HospitalBasicResponse.builder()
-        .id(entity.getId())
-        .name(entity.getName())
-        .latitude(entity.getLatitude())
-        .longitude(entity.getLongitude())
-        .address(entity.getAddress())
-        .complexityGrade(entity.getComplexityGrade())
-        .specialty(entity.getSpecialty())
-        .build();
-    }
-    
-    private AmbulanceResponse  ambulanceToResponse(Ambulance entity){
-        if (entity != null) {
-        return AmbulanceResponse.builder()
-        .id(entity.getId())
-        .ambulanceType(entity.getAmbulanceType())
-        .vehiclePlate(entity.getVehiclePlate())
-        .status(entity.getStatus())
-        .latitude(entity.getLatitude())
-        .longitude(entity.getLongitude())
-        .build();
-        }
-        else {
-            
-            return AmbulanceResponse.builder().build();
-        }
-    }
-   /*  private UserResponse  userToResponse(User entity){
-        if (entity != null) {
-        return UserResponse.builder()
-        
-        .build();
-        }
-        else {
-            
-            return UserResponse.builder().build();
-        }
-    } */
 
     private ServiceEntity requestToEntity(ServiceEntityRequest request){
-
-        return ServiceEntity.builder()
-                
-                .latitude(request.getLatidudeLocation())
-                .longitude(request.getLongitudeLocation())
-                .status(request.getStatusService())
-                .anamnesis(request.getAnamnesis())
-                .build();
-
+        ServiceEntity service = new ServiceEntity();
+        BeanUtils.copyProperties(request, service);
+        return  service;
     }
+
 
     private ServiceEntity find(Long id) {
         return this.serviceEntityRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encontró el servicio con el ID: " + id));
     }
+
+    /*-
+     * ESPECIFIC METHODS
+     */
+
+
+    
+    private ServicesInHospital serviceToResponse(ServiceEntity serviceEntity) {
+        return ServicesInHospital
+                .builder()
+                .id(serviceEntity.getId())
+                .latitude(serviceEntity.getLatitude())
+                .longitude(serviceEntity.getLongitude())
+                .status(serviceEntity.getStatus())
+                .anamnesis(serviceEntity.getAnamnesis())
+                .ambulance(ambulanceToResponse(serviceEntity.getAmbulance()))
+                .client(userToResponse(serviceEntity.getClient()))
+                .build();
+    }
+
+   
+
+
+    private AmbulanceResponse ambulanceToResponse(Ambulance entity) {
+        AmbulanceResponse ambulanceResponse = new AmbulanceResponse();
+        BeanUtils.copyProperties(entity, ambulanceResponse);
+        return ambulanceResponse;
+    
+    }
+
+
+
+
+    
+
+    private UserResponse userToResponse(User entity) {
+        UserResponse userResponse = new UserResponse();
+        BeanUtils.copyProperties(entity, userResponse);
+        return userResponse;
+    }
+
+
+
+    private HospitalBasicResponse hospitalToResponse(Hospital entity) {
+        HospitalBasicResponse hospitalResponse = new HospitalBasicResponse();
+        BeanUtils.copyProperties(entity, hospitalResponse);
+        return hospitalResponse;
+        
+    }
+
+
+
 
 }
