@@ -14,9 +14,8 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import com.sami.sami_app.api.dto.request.LocationsRequest;
-import com.sami.sami_app.infrastructure.AppConfig;
+// import com.sami.sami_app.infrastructure.AppConfig;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
-
 
 @Service
 public class MapService implements IMapService {
@@ -24,23 +23,8 @@ public class MapService implements IMapService {
     @Autowired
     private GeoApiContext geoApiContext;
 
-    @Autowired
-    private AppConfig appConfig;
-
-    // Método para obtener la dirección a partir de las coordenadas de latitud y longitud
-    public String getLocationAddress(Double latitude, Double longitude) {
-        try {
-            GeocodingResult[] results = GeocodingApi.reverseGeocode(geoApiContext, new LatLng(latitude, longitude))
-                    .await();
-            if (results.length > 0) {
-                return results[0].formattedAddress;
-            } else {
-                return "No se encontraron resultados";
-            }
-        } catch (Exception e) {
-            return "Error al realizar la geolocalización: " + e.getMessage();
-        }
-    }
+    // @Autowired
+    // private AppConfig appConfig;
 
     // Método para calcular el tiempo estimado de servicio
     public Map<String, String> getEstimatedTime(LocationsRequest locationsRequest) {

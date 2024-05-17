@@ -4,12 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import com.sami.sami_app.api.dto.request.LocationsRequest;
-import com.sami.sami_app.domain.entities.Ambulance;
-import com.sami.sami_app.domain.entities.Hospital;
-import com.sami.sami_app.domain.entities.ServiceEntity;
+import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
 import com.sami.sami_app.infrastructure.services.ServiceEntityService;
 
@@ -22,38 +19,29 @@ public class MapController {
     @Autowired
     private ServiceEntityService serviceEntityService;
 
-    @Autowired
-    private AmbulanceService ambulanceService;
+    @PostMapping("/locations/{id}")
+    public Map<String, String> getAllLocations(@PathVariable Long id) {
 
-    @Autowired
-    private HospitalService hospitalService;
+        Map<String, String> locations = new HashMap<>();
 
-    
+        ServiceEntityResponse serviceEntityResponse = this.serviceEntityService.getById(id);
 
-   @PostMapping("/locations")
-public Map<String, String> getAllLocations() {
-    Map<String, String> locations = new HashMap<>();
-    
-    //USER
-    ServiceEntity service = serviceEntityService.findById(id);
-    Double serviceLatitude = service.getLatitude();
-    Double serviceLongitude = service.getLongitude();
-    
-    //AMBULANCE
-    Ambulance ambulance = ambulanceService.findById(idDeLaAmbulancia);
-    Double ambulanceLatitude = ambulance.getLatitude();
-    Double ambulanceLongitude = ambulance.getLongitude();
-    
-    //HOSPITAL
-    Hospital hospital = hospitalService.findById(idDelHospital);
-    Double hospitalLatitude = hospital.getLatitude();
-    Double hospitalLongitude = hospital.getLongitude();
-    
-   
-    locations.put("Service", mapService.getPosition(serviceLatitude, serviceLongitude));
-    locations.put("Ambulance", mapService.getPosition(ambulanceLatitude, ambulanceLongitude));
-    locations.put("Hospital", mapService.getPosition(hospitalLatitude, hospitalLongitude));
+        // SERVICE
+        Double serviceLatitude = serviceEntityResponse.getLatidudeLocation();
+        Double serviceLongitude = serviceEntityResponse.getLongitudeLocation();
 
-    return locations;
-}
+        // AMBULANCE
+        Double ambulanceLatitude = serviceEntityResponse.getAmbulance().getLatitude();
+        Double ambulanceLongitude = serviceEntityResponse.getAmbulance().getLongitude();
+
+        // HOSPITAL
+        Double hospitalLatitude = serviceEntityResponse.getHospital().getLatitude();
+        Double hospitalLongitude = serviceEntityResponse.getHospital().getLongitude();
+
+        locations.put("Service", mapService.getPosition(serviceLatitude, serviceLongitude));
+        locations.put("Ambulance", mapService.getPosition(ambulanceLatitude, ambulanceLongitude));
+        locations.put("Hospital", mapService.getPosition(hospitalLatitude, hospitalLongitude));
+
+        return locations;
+    }
 }
