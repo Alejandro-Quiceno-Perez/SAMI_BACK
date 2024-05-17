@@ -10,6 +10,7 @@ import main.java.com.sami.sami_app.api.dto.response.AuthResp;
 import main.java.com.sami.sami_app.infrastructure.abstract_services.IAuthService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +20,8 @@ public class AuthService implements  IAuthService{
     private final AccountRepository accountRepository;
     @Autowired
     private final JwtService jwtService;
-
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AuthResp login(LoginRequest request) {
