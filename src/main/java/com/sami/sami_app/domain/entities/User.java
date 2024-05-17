@@ -18,10 +18,11 @@ import lombok.NoArgsConstructor;
 
 /*-
 *---------------------------------------------------------------------------------------------------------------------------
-The "user" class defines the attributes related to the user, the unique identifier, the type of user and the user's personal information such as name, surname, blood type.
+The "user" class defines the attributes related to the user, the unique identifier, the type of user and the user's personal information 
+such as name, surname, blood type.
 *---------------------------------------------------------------------------------------------------------------------------
 */
-@Entity(name = "User")
+@Entity(name = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

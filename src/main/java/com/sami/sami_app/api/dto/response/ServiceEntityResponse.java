@@ -17,7 +17,7 @@ public class ServiceEntityResponse {
     private double longitudeLocation;
     private StatusService statusService;
     private String anamnesis;
-    private HospitalResponse hospital;
+    private HospitalBasicResponse hospital;
     private AmbulanceResponse ambulance;
     //private UserResponse user;
    
