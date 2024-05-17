@@ -7,5 +7,4 @@ import com.sami.sami_app.domain.entities.Ambulance;
 
 @Repository
 public interface AmbulanceRepository extends JpaRepository<Ambulance, Long> {
-
 }
