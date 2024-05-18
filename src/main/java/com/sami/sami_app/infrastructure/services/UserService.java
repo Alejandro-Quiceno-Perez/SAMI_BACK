@@ -39,15 +39,14 @@ public class UserService implements IUserService {
     @Override
     public UserResponse create(UserRequest request) {
         User user = this.requestToEntity(request);
-        return this.
-        entityToResponse(this.userRepository.save(user));
+        return this.entityToResponse(this.userRepository.save(user));
     }
 
     @Override
     public UserResponse update(UserRequest request, Long id) {
         User user = this.find(id);
         user = this.requestToEntity(request);
-        user.setId(id);
+        user.setIdUser(id);
         return this.entityToResponse(this.userRepository.save(user));
     }
 

@@ -1,6 +1,5 @@
 package com.sami.sami_app.infrastructure.services;
 
-
 import com.sami.sami_app.domain.entities.Ambulance;
 import com.sami.sami_app.domain.entities.Hospital;
 import com.sami.sami_app.domain.entities.ServiceEntity;
@@ -31,9 +30,6 @@ import lombok.AllArgsConstructor;
 
 import java.util.List;
 
-
-
-
 @Service
 @Transactional
 @AllArgsConstructor
@@ -48,11 +44,10 @@ public class ServiceEntityService implements IServiceEntityService {
     @Autowired
     private final UserRepository userRepository;
 
-    
-
     @Override
     public Page<ServiceEntityResponse> getAll(int page, int size, SortType sortType) {
-        if (page < 0) page = 0;
+        if (page < 0)
+            page = 0;
 
         PageRequest pagination = null;
 
@@ -61,7 +56,6 @@ public class ServiceEntityService implements IServiceEntityService {
             case ASC -> pagination = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascending());
             case DESC -> pagination = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
         }
-
 
         return this.serviceEntityRepository.findAll(pagination)
                 .map(this::entityToResponse);
@@ -73,20 +67,18 @@ public class ServiceEntityService implements IServiceEntityService {
         return entityToResponse(this.find(id));
     }
 
-
     @Override
     public ServiceEntityResponse create(ServiceEntityRequest request) {
         ServiceEntity service = this.requestToEntity(request);
-    
         return this.entityToResponse(this.serviceEntityRepository.save(service));
     }
 
     @Override
     public ServiceEntityResponse update(ServiceEntityRequest serviceEntityRequest, Long id) {
-        
+
         ServiceEntity service = this.find(id);
         service = this.requestToEntity(serviceEntityRequest);
-        service.setId(id);
+        service.setIdService(id);
         return this.entityToResponse(this.serviceEntityRepository.save(service));
 
     }
@@ -98,16 +90,13 @@ public class ServiceEntityService implements IServiceEntityService {
 
     @Override
     public List<ServiceEntityRequest> search(StatusService statusService) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'search'");
     }
 
+    private ServiceEntityResponse entityToResponse(ServiceEntity entity) {
 
-    private ServiceEntityResponse entityToResponse(ServiceEntity entity){
-
-      
         return ServiceEntityResponse.builder()
-                .id(entity.getId())
+                .idService(entity.getIdService())
                 .latidudeLocation(entity.getLatitude())
                 .longitudeLocation(entity.getLongitude())
                 .statusService(entity.getStatus())
@@ -115,24 +104,22 @@ public class ServiceEntityService implements IServiceEntityService {
                 .hospital(hospitalToResponse(entity.getHospital()))
                 .ambulance(ambulanceToResponse(entity.getAmbulance()))
                 .client(userToResponse(entity.getClient()))
-                
+
                 .build();
     }
 
-    private ServiceEntity requestToEntity(ServiceEntityRequest request){
+    private ServiceEntity requestToEntity(ServiceEntityRequest request) {
 
-        return  ServiceEntity.builder()
-        .id(request.getId())
-        .latitude(request.getLatidudeLocation())
-        .longitude(request.getLongitudeLocation())
-        .status(request.getStatusService())
-        .anamnesis(request.getAnamnesis())
-        .ambulance(this.ambulanceRepository.findById(request.getIdAmbulance()).orElseThrow())
-        .hospital(this.hospitalRepository.findById(request.getIdHospital()).orElseThrow())
-        .client(this.userRepository.findById(request.getIdClient()).orElseThrow())
-        .build();
+        return ServiceEntity.builder()
+                .latitude(request.getLatidudeLocation())
+                .longitude(request.getLongitudeLocation())
+                .status(request.getStatusService())
+                .anamnesis(request.getAnamnesis())
+                .ambulance(this.ambulanceRepository.findById(request.getIdAmbulance()).orElseThrow())
+                .hospital(this.hospitalRepository.findById(request.getIdHospital()).orElseThrow())
+                .client(this.userRepository.findById(request.getIdClient()).orElseThrow())
+                .build();
     }
-
 
     private ServiceEntity find(Long id) {
         return this.serviceEntityRepository.findById(id)
@@ -142,11 +129,10 @@ public class ServiceEntityService implements IServiceEntityService {
     /*-
      * ESPECIFIC METHODS
      */
-   
 
     private AmbulanceResponse ambulanceToResponse(Ambulance entity) {
         return AmbulanceResponse.builder()
-                .id(entity.getId())
+                .idAmbulance(entity.getIdAmbulance())
                 .vehiclePlate(entity.getVehiclePlate())
                 .ambulanceType(entity.getAmbulanceType())
                 .status(entity.getStatus())
@@ -157,21 +143,17 @@ public class ServiceEntityService implements IServiceEntityService {
                 .build();
     }
 
-
     private UserResponse userToResponse(User entity) {
         UserResponse userResponse = new UserResponse();
         BeanUtils.copyProperties(entity, userResponse);
         return userResponse;
     }
 
-
     private HospitalBasicResponse hospitalToResponse(Hospital entity) {
         HospitalBasicResponse hospitalResponse = new HospitalBasicResponse();
         BeanUtils.copyProperties(entity, hospitalResponse);
         return hospitalResponse;
-        
+
     }
-
-
 
 }

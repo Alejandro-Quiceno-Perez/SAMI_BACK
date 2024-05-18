@@ -6,13 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ServiceEntityResponse {
-    private long id;
+    private long idService;
     private double latidudeLocation;
     private double longitudeLocation;
     private StatusService statusService;
@@ -20,5 +19,5 @@ public class ServiceEntityResponse {
     private HospitalBasicResponse hospital;
     private AmbulanceResponse ambulance;
     private UserResponse client;
-   
+
 }

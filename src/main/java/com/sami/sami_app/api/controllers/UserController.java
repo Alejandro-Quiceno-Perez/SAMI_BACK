@@ -22,7 +22,7 @@ import com.sami.sami_app.infrastructure.abstract_services.IUserService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(path = "/customer")
+@RequestMapping(path = "/user")
 @AllArgsConstructor
 public class UserController {
 
@@ -47,7 +47,7 @@ public class UserController {
         return ResponseEntity.ok(this.objIUserService.create(request));
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.objIUserService.delete(id);
 

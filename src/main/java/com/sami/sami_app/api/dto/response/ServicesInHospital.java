@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ServicesInHospital {
-    private Long id;
+    private Long idService;
     private double latitude;
     private double longitude;
     private StatusService status;

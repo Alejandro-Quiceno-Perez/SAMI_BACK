@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationsRequest {
@@ -16,8 +16,8 @@ public class LocationsRequest {
 
     private Double ambulanceLatitude;
     private Double ambulanceLongitude;
-    
+
     private Double hospitalLatitude;
     private Double hospitalLongitude;
-    
+
 }

@@ -16,7 +16,7 @@ import jakarta.validation.constraints.DecimalMax;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceEntityRequest {
-    private Long id;
+    // private Long id;
     @DecimalMin(value = "-90.0", inclusive = true, message = "Latitude must be between -90 and 90")
     @DecimalMax(value = "90.0", inclusive = true, message = "Latitude must be between -90 and 90")
     private double latidudeLocation;
