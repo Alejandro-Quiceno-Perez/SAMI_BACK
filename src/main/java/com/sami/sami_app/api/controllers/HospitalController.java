@@ -53,7 +53,7 @@ public class HospitalController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/update/{id}")
     public ResponseEntity<HospitalResponse> update(
             @Validated @RequestBody HospitalRequest request,
             @PathVariable Long id) {

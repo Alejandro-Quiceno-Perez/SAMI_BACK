@@ -58,7 +58,7 @@ public class HospitalService implements IHospitalService {
     public HospitalResponse update(HospitalRequest request, Long id) {
         Hospital hospital = this.find(id);
         Hospital hospitalUpdate = this.requestToEntity(request);
-        hospitalUpdate.setId(id);
+        hospitalUpdate.setIdHospital(id);
         hospitalUpdate.setServices(hospital.getServices());
         return this.entityToResponse(this.hospitalRepository.save(hospitalUpdate));
     }
@@ -77,7 +77,7 @@ public class HospitalService implements IHospitalService {
         List<ServicesInHospital> services = entity.getServices().stream().map(this::serviceToResponse).toList();
         return HospitalResponse
                 .builder()
-                .id(entity.getId())
+                .idHospital(entity.getIdHospital())
                 .name(entity.getName())
                 .latitude(entity.getLatitude())
                 .longitude(entity.getLongitude())
@@ -97,7 +97,7 @@ public class HospitalService implements IHospitalService {
     private ServicesInHospital serviceToResponse(ServiceEntity serviceEntity) {
         return ServicesInHospital
                 .builder()
-                .id(serviceEntity.getId())
+                .idService(serviceEntity.getIdService())
                 .latitude(serviceEntity.getLatitude())
                 .longitude(serviceEntity.getLongitude())
                 .status(serviceEntity.getStatus())
@@ -115,7 +115,7 @@ public class HospitalService implements IHospitalService {
 
     private AmbulanceResponse ambulanceToResponse(Ambulance entity) {
         return AmbulanceResponse.builder()
-                .id(entity.getId())
+                .idAmbulance(entity.getIdAmbulance())
                 .vehiclePlate(entity.getVehiclePlate())
                 .ambulanceType(entity.getAmbulanceType())
                 .status(entity.getStatus())

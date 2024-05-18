@@ -41,19 +41,19 @@ public class AmbulanceController {
         return ResponseEntity.ok(this.iAmbulanceService.getById(id));
     }
 
-    @PostMapping
+    @PostMapping(path = "/create")
     public ResponseEntity<AmbulanceResponse> create(
             @Validated @RequestBody AmbulanceRequest request) {
         return ResponseEntity.ok(this.iAmbulanceService.create(request));
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.iAmbulanceService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/update/{id}")
     public ResponseEntity<AmbulanceResponse> update(
             @Validated @RequestBody AmbulanceRequest request,
             @PathVariable Long id) {
