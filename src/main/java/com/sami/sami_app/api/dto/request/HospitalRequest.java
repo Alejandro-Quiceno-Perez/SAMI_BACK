@@ -31,7 +31,7 @@ public class HospitalRequest {
     private String address;
     @NotNull(message = "The hospital level is required")
     @Size(max = 100, message = "The hospital level must have a maximum of 50 characters")
-    @Schema(description = "Enter the degree of emergency which may be from 1 to 5 ",example = "1")
+    @Schema(description = "Enter the degree of emergency which may be from 1 to 3 ",example = "1")
     private String complexityGrade;
     @NotNull(message ="The specialty of the hospital is required")
     @Schema(description = "short description of hospital specialties",example = "this hospital is specialized in cardiac emergencies")

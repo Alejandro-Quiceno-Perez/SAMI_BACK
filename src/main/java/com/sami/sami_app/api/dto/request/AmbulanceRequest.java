@@ -24,7 +24,7 @@ public class AmbulanceRequest {
     @NotBlank(message = "Te vehicle plate is required")
     @Size(max = 10, message = "The vehicle plate can have a maximum of 10 characters.")
     private String vehiclePlate;
-    @Schema(description = "Status of the ambulance - select ALS (Advanced Life Support) - BLS (Basic Life Support) ")
+    @Schema(description = "Status of the ambulance - select ALS (Advanced Life Support) - BLS (Basic Life Support) ",example = "BLS")
     @NotBlank(message = "Te ambulance type is required")
     @Size(max = 50, message = "The ambulance type can have a maximum of 50 characters.")
     private String ambulanceType;
