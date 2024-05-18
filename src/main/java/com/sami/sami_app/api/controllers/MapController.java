@@ -9,12 +9,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.sami.sami_app.api.dto.request.LocationsRequest;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
+/**
+ * MAP CONTROLLER
+ * 
+ * The map controller is in charge of all the management of capturing the *location (latitude-longitude) of the service, ambulance and hospital.
+ */
+
+ 
+//SWAGGER
+@Tag(name="Map controller") 
 @Controller
 public class MapController {
 
     @Autowired
     private IMapService mapService;
 
+    //SWAGGER 
+    @Operation(
+        summary = "Capture all service locations",
+        description = "captures the latitude and longitude of the service, ambulance and hospital."
+    )
+    //method in charge of capturing all locations of services, ambulances and hospitals.
     @PostMapping("/locations")
     public Map<String, String> getAllLocations(@RequestBody LocationsRequest locationsRequest) {
         Double serviceLatitude = locationsRequest.getServiceLatitude();
@@ -29,6 +48,7 @@ public class MapController {
         locations.put("Ambulance", mapService.getLocationAddress(ambulanceLatitude, ambulanceLongitude));
         locations.put("Hospital", mapService.getLocationAddress(hospitalLatitude, hospitalLongitude));
 
+        //returns all locations 
         return locations;
     }
 }
