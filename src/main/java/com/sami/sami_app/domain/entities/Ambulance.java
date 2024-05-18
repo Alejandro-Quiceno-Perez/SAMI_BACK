@@ -35,7 +35,7 @@ public class Ambulance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ambulance")
-    private Long id;
+    private Long idAmbulance;
 
     @Column(name = "vehicle_plate", nullable = false, length = 10)
     private String vehiclePlate;
