@@ -1,4 +1,4 @@
-package main.java.com.sami.sami_app.api.dto.response;
+package com.sami.sami_app.api.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

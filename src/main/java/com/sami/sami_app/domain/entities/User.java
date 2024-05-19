@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,7 @@ such as name, surname, blood type.
 */
 @Entity(name = "user")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {

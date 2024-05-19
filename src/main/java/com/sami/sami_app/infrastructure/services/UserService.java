@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sami.sami_app.api.dto.request.UserRequest;
 import com.sami.sami_app.api.dto.response.UserResponse;
 import com.sami.sami_app.domain.entities.User;
-import com.sami.sami_app.domain.repositories.AccountRepository;
+import com.sami.sami_app.domain.repositories.UserRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IUserService;
 import com.sami.sami_app.util.enums.SortType;
 
@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 public class UserService implements IUserService {
 
     @Autowired
-    private final AccountRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Page<UserResponse> getAll(int page, int size, SortType sortType) {

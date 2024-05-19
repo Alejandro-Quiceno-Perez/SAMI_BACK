@@ -18,24 +18,24 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
-    // Clave o firma
-    private final String SECRET_KEY = "U0FNSV9TRVJWSUNJT19BTUJVTEFUT1JJT19NRURJQ09fSU5NRURJQVRPIExhIE1lam9yIE9wY2lvbiBQYXJhIFNhbHZhciBUdSBWaWRhLi4uLmNsYXZlIHNlY3JldA==";
+    // key or signature
+    private final String SECRET_KEY = "RVNUQSBDTEFWRSBFUyBHRU5FUkFEQSBQQVJBIExBIEZJUk1BIERFIExBUyBDVUVOVEFTIERFIFNBTUkgKi8t";
 
-    // Encriptar clave secreta
+    // Encript Secret Key
     public SecretKey getKey () {
-        // Convertir a bityes
+        //  Encrypt secret key
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
-        // return llave cifrada
+        // return encrypted key
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // constuir JWT
+    // Build JWT
     public String getToken(Map <String, Object> claims, Account account) {
         return Jwts.builder()
-                .claims(claims) // cuerpo jwt
+                .claims(claims) // JWT body 
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(this.getKey()) // firma token
+                .signWith(this.getKey()) // signature token
                 .compact();
     }
 
@@ -49,7 +49,7 @@ public class JwtService {
     }
 
 
-    /*Obtener todos los Claims*/
+    /*OBTAIN ALL CLAIMS*/
     public Claims getAllClaims (String token) {
         return Jwts
                 .parser()
@@ -65,7 +65,7 @@ public class JwtService {
     }
 
 
-    public String getUserNameFromToken(String token) {
+    public String getUserEmailFromToken(String token) {
         return this.getClaim(token, Claims::getSubject);
     }
 
@@ -78,7 +78,7 @@ public class JwtService {
     }
 
     public boolean isTokenIsValid (String token, UserDetails userDetails) {
-        String userEmail = this.getUserNameFromToken(token);
+        String userEmail = this.getUserEmailFromToken(token);
 
         return (userEmail.equals(userDetails.getUsername()) && !this.isTokenExpired(token));
     }

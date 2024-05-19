@@ -2,8 +2,6 @@ package com.sami.sami_app.domain.entities;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
-
 import com.sami.sami_app.util.enums.Role;
 
 import jakarta.persistence.CascadeType;
@@ -33,7 +31,7 @@ public class Account  implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_account")
-    private UUID id;
+    private String id;
 
     @Column(nullable = false, unique = true, length = 50)
     private String email;
@@ -48,7 +46,7 @@ public class Account  implements UserDetails {
     @OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
 
-    // Permisos de usuario
+    // User permissions
     @Override
     public Collection <? extends GrantedAuthority> getAuthorities () {
         return List.of(new SimpleGrantedAuthority(this.role.name()));

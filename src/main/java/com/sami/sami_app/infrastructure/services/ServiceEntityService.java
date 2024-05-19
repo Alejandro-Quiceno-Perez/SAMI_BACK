@@ -4,8 +4,6 @@ package com.sami.sami_app.infrastructure.services;
 import com.sami.sami_app.domain.entities.Ambulance;
 import com.sami.sami_app.domain.entities.Hospital;
 import com.sami.sami_app.domain.entities.ServiceEntity;
-import com.sami.sami_app.util.messages.ErrorMessages;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,7 +82,6 @@ public class ServiceEntityService implements IServiceEntityService {
 
     @Override
     public List<ServiceEntityRequest> search(StatusService statusService) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'search'");
     }
 
