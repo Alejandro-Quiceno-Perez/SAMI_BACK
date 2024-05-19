@@ -16,19 +16,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Schema(description = "DTO for Locations requests")
 public class LocationsRequest {
-
-     @Schema(description = "latitude of service", example = "50.1234")
+    @Schema(description = "latitude of service", example = "50.1234")
     private Double serviceLatitude;
+    
     @Schema(description = "longitude of service", example = "50.1234")
     private Double serviceLongitude;
-
+    
     @Schema(description = "latitude of ambulance", example = "50.1234")
     private Double ambulanceLatitude;
+    
     @Schema(description = "longitude of ambulance", example = "50.1234")
     private Double ambulanceLongitude;
+    
     @Schema(description = "latitude of hospital", example = "50.1234")
     private Double hospitalLatitude;
+    
     @Schema(description = "longitude of hospital", example = "50.1234")
     private Double hospitalLongitude;
-    
 }

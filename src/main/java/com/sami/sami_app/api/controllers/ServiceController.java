@@ -69,7 +69,7 @@ public class ServiceController {
     //SWAGGER
     @Operation(
         summary = "Displays one Service by id",
-        description = "Shows the service by the ID sent or requested by path"
+        description = "Shows the service by the ID sent or requested by path,value cannot be less than 1"
     )
     //method that retrieves an service by ID.
     @GetMapping(path = "/{id}")
@@ -94,7 +94,7 @@ public class ServiceController {
      //SWAGGER
      @Operation(
         summary = "Delete one service by id",
-        description = "deletes an service based on an ID to be sent by Path."
+        description = "deletes an service based on an ID to be sent by Path, value cannot be less than 1."
     )
     //method that eliminates an ambulance
     @DeleteMapping(path = "/{id}")
@@ -108,7 +108,7 @@ public class ServiceController {
     //SWAGGER
     @Operation(
         summary = "update one service by id",
-        description = "updates a previously created service and the ID and the new modified parameters must be sent through the Path."
+        description = "updates a previously created service and the ID and the new modified parameters must be sent through the Path, value cannot be less than 1"
     )
     //method that update an ambulance registered
     @PutMapping(path = "/{id}" )

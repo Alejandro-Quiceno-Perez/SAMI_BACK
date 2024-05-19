@@ -57,7 +57,7 @@ public class UserController {
     //SWAGGER
     @Operation(
         summary = "Displays one user by id",
-        description = "Shows the user by the ID sent or requested by path"
+        description = "Shows the user by the ID sent or requested by path,value cannot be less than 1."
     )
     //method that retrieves an user by ID.
     @GetMapping(path = "/{id}")
@@ -80,7 +80,7 @@ public class UserController {
     //SWAGGER
     @Operation(
         summary = "Delete user by ID",
-        description = "deletes an user based on an ID to be sent by Path."
+        description = "deletes an user based on an ID to be sent by Path,value cannot be less than 1"
     )
     //method that eliminates an ambulance
     @DeleteMapping(path = "/{id}")
@@ -93,7 +93,7 @@ public class UserController {
     //SWAGGER
     @Operation(
         summary = "update  user by ID",
-        description = "updates a previously created user and the ID and the new modified parameters must be sent through the Path."
+        description = "updates a previously created user and the ID and the new modified parameters must be sent through the Path, value cannot be less than 1"
     )
     //method that update an user registered
     @PutMapping(path = "/update/{id}")

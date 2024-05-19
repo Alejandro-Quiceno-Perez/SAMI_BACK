@@ -61,7 +61,7 @@ public class HospitalController {
     //SWAGGER
     @Operation(
         summary = "Displays one Hospital by id",
-        description = "Shows the Hospital by the ID sent or requested by path"
+        description = "Shows the Hospital by the ID sent or requested by path,value cannot be less than 1."
     )
     //method that retrieves an hospital by ID.
     @GetMapping(path = "/{id}")
@@ -84,7 +84,7 @@ public class HospitalController {
      //SWAGGER
      @Operation(
         summary = "Delete one hospital by id",
-        description = "deletes an hospital based on an ID to be sent by Path."
+        description = "deletes an hospital based on an ID to be sent by Path, value cannot be less than 1"
     )
     //method that eliminates an hospital
     @DeleteMapping(path = "/delete/{id}")
@@ -96,7 +96,7 @@ public class HospitalController {
     //SWAGGER
     @Operation(
         summary = "update one Hospital by id",
-        description = "updates a previously created hospital and the ID and the new modified parameters must be sent through the Path."
+        description = "updates a previously created hospital and the ID and the new modified parameters must be sent through the Path, value cannot be less than 1"
     )
     //method that update an hopsital registered
     @PutMapping(path = "/{id}")
