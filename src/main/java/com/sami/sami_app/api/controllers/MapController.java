@@ -10,6 +10,8 @@ import com.sami.sami_app.api.dto.request.LocationsRequest;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 
@@ -33,6 +35,13 @@ public class MapController {
         summary = "Capture all service locations",
         description = "captures the latitude and longitude of the service, ambulance and hospital."
     )
+     @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved list"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     //method in charge of capturing all locations of services, ambulances and hospitals.
     @PostMapping("/locations")
     public Map<String, String> getAllLocations(@RequestBody LocationsRequest locationsRequest) {

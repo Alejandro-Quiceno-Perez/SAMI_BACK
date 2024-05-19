@@ -21,6 +21,8 @@ import com.sami.sami_app.infrastructure.abstract_services.IHospitalService;
 import com.sami.sami_app.util.enums.SortType;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
@@ -50,6 +52,13 @@ public class HospitalController {
         summary = "Displays all hospitals with pagination",
         description = "Displays the hospitals in a list, it is configured to display 10 items per page."
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved Hospital List"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to view the list of hospitals. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that retrieves a paged list of all available hospitals.
     @GetMapping
     public ResponseEntity<Page<HospitalResponse>> getAll(
@@ -63,6 +72,14 @@ public class HospitalController {
         summary = "Displays one Hospital by id",
         description = "Shows the Hospital by the ID sent or requested by path,value cannot be less than 1."
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved Hospital"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to view the hospital. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "404", description = "Hospital not found"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that retrieves an hospital by ID.
     @GetMapping(path = "/{id}")
     public ResponseEntity<HospitalResponse> getById(@PathVariable Long id) {
@@ -74,6 +91,13 @@ public class HospitalController {
         summary = "creates a new hospital",
         description = "create a new hospital by entering the required data"
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successfully created Hospital"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to create a hospital. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that creates an Hospital
     @PostMapping(path = "/create")
     public ResponseEntity<HospitalResponse> create(
@@ -86,6 +110,14 @@ public class HospitalController {
         summary = "Delete one hospital by id",
         description = "deletes an hospital based on an ID to be sent by Path, value cannot be less than 1"
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully deleted Hospital"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to delete the hospital. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "404", description = "Hospital not found"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that eliminates an hospital
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
@@ -98,6 +130,14 @@ public class HospitalController {
         summary = "update one Hospital by id",
         description = "updates a previously created hospital and the ID and the new modified parameters must be sent through the Path, value cannot be less than 1"
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully updated Hospital"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to update the hospital. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "404", description = "Hospital not found"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that update an hopsital registered
     @PutMapping(path = "/{id}")
     public ResponseEntity<HospitalResponse> update(

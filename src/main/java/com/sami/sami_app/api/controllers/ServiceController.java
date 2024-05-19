@@ -24,6 +24,8 @@ import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
 import com.sami.sami_app.util.enums.SortType;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
@@ -51,6 +53,13 @@ public class ServiceController {
         summary = "Displays all Services with pagination and SORT",
         description = "Displays the service in a list, it is configured to display 10 items per page. And can be sorted by NONE, ASC, DESC "
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved Service List"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to view the list of services. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that retrieves a paged list of all available ambulances.
      @GetMapping
     public ResponseEntity<Page<ServiceEntityResponse>> getAll(
@@ -71,6 +80,14 @@ public class ServiceController {
         summary = "Displays one Service by id",
         description = "Shows the service by the ID sent or requested by path,value cannot be less than 1"
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved Service"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to view the service. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "404", description = "Service not found"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that retrieves an service by ID.
     @GetMapping(path = "/{id}")
     public ResponseEntity<ServiceEntityResponse> getById(@PathVariable Long id) {
@@ -83,6 +100,13 @@ public class ServiceController {
         summary = "creates a new service",
         description = "create a new service by entering the required data"
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Successfully created Service"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to create a service. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that creates an service
      @PostMapping(path = "/create")
     public ResponseEntity<ServiceEntityResponse> create(
@@ -96,6 +120,14 @@ public class ServiceController {
         summary = "Delete one service by id",
         description = "deletes an service based on an ID to be sent by Path, value cannot be less than 1."
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully deleted Service"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to delete the service. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "404", description = "Service not found"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that eliminates an ambulance
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
@@ -110,6 +142,14 @@ public class ServiceController {
         summary = "update one service by id",
         description = "updates a previously created service and the ID and the new modified parameters must be sent through the Path, value cannot be less than 1"
     )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully updated Service"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Not authorized to update the service. Invalid token"),
+        @ApiResponse(responseCode = "403", description = "Forbidden access"),
+        @ApiResponse(responseCode = "404", description = "Service not found"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
+    })
     //method that update an ambulance registered
     @PutMapping(path = "/{id}" )
     public ResponseEntity<ServiceEntityResponse> update(
