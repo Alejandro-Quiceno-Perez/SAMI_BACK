@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
         termsOfService = "http://example.com/terms",
         contact = @Contact(
             name = "SAMI",
-            url = "http://sami.com",
+            url = "https://alejandro-quiceno-perez.github.io/SAMI_FRONT/index.html",
             email = "samiserviciosambulatorios@gmail.com"
         ),
         license = @License(
