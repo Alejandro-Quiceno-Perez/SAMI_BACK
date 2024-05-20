@@ -27,16 +27,16 @@ public class MapController {
         ServiceEntityResponse serviceEntityResponse = this.serviceEntityService.getById(id);
 
         // SERVICE
-        Double serviceLatitude = serviceEntityResponse.getLatidudeLocation();
-        Double serviceLongitude = serviceEntityResponse.getLongitudeLocation();
+        Double serviceLatitude = serviceEntityResponse.getLatitudeService();
+        Double serviceLongitude = serviceEntityResponse.getLongitudeService();
 
         // AMBULANCE
-        Double ambulanceLatitude = serviceEntityResponse.getAmbulance().getLatitude();
-        Double ambulanceLongitude = serviceEntityResponse.getAmbulance().getLongitude();
+        Double ambulanceLatitude = serviceEntityResponse.getAmbulance().getLatitudeAmbulance();
+        Double ambulanceLongitude = serviceEntityResponse.getAmbulance().getLongitudeAmbulance();
 
         // HOSPITAL
-        Double hospitalLatitude = serviceEntityResponse.getHospital().getLatitude();
-        Double hospitalLongitude = serviceEntityResponse.getHospital().getLongitude();
+        Double hospitalLatitude = serviceEntityResponse.getHospital().getLatitudeHospital();
+        Double hospitalLongitude = serviceEntityResponse.getHospital().getLongitudeHospital();
 
         locations.put("Service", mapService.getPosition(serviceLatitude, serviceLongitude));
         locations.put("Ambulance", mapService.getPosition(ambulanceLatitude, ambulanceLongitude));

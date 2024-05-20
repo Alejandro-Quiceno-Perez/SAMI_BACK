@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class HospitalResponse {
     private Long idHospital;
     private String name;
-    private Double latitude;
-    private Double longitude;
+    private Double latitudeHospital;
+    private Double longitudeHospital;
     private String address;
     private ComplexityGrade complexityGrade;
     private String specialty;

@@ -17,13 +17,15 @@ import jakarta.validation.constraints.DecimalMax;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceEntityRequest {
-    @DecimalMin(value = "-90.0", inclusive = true, message = "Latitude must be between -90 and 90")
-    @DecimalMax(value = "90.0", inclusive = true, message = "Latitude must be between -90 and 90")
-    private double latidudeLocation;
+    @DecimalMin(value = "-90.0", inclusive = true, message = "Service - Latitude must be between -90 and 90")
+    @DecimalMax(value = "90.0", inclusive = true, message = "Service - Latitude must be between -90 and 90")
+    @NotNull(message = "The latitude of the service is required")
+    private double latidudeService;
 
-    @DecimalMin(value = "-180.0", inclusive = true, message = "Longitude must be between -180 and 180")
-    @DecimalMax(value = "180.0", inclusive = true, message = "Longitude must be between -180 and 180")
-    private double longitudeLocation;
+    @DecimalMin(value = "-180.0", inclusive = true, message = "Service - Longitude must be between -180 and 180")
+    @DecimalMax(value = "180.0", inclusive = true, message = "Service - Longitude must be between -180 and 180")
+    @NotNull(message = "The longitude of the service is required")
+    private double longitudeService;
 
     @NotNull(message = "The status of the service is required")
     private StatusService statusService;
