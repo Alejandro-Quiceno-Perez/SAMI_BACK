@@ -34,8 +34,6 @@ public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_account")
-
-    private String id;
     private String idAccount;
 
     @Email
