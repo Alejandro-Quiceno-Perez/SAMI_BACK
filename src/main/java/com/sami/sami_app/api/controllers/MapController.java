@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
+import com.sami.sami_app.infrastructure.services.ServiceEntityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,6 +30,8 @@ public class MapController {
 
     @Autowired
     private IMapService mapService;
+    @Autowired
+    private ServiceEntityService serviceEntityService;
 
     //SWAGGER 
     @Operation(
@@ -42,18 +45,6 @@ public class MapController {
         @ApiResponse(responseCode = "403", description = "Forbidden"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
-    //method in charge of capturing all locations of services, ambulances and hospitals.
-    @PostMapping("/locations")
-    public Map<String, String> getAllLocations(@RequestBody LocationsRequest locationsRequest) {
-        Double serviceLatitude = locationsRequest.getServiceLatitude();
-        Double serviceLongitude = locationsRequest.getServiceLongitude();
-        Double ambulanceLatitude = locationsRequest.getAmbulanceLatitude();
-        Double ambulanceLongitude = locationsRequest.getAmbulanceLongitude();
-        Double hospitalLatitude = locationsRequest.getHospitalLatitude();
-        Double hospitalLongitude = locationsRequest.getHospitalLongitude();
-    @Autowired
-    private ServiceEntityService serviceEntityService;
-
     @PostMapping("/locations/{id}")
     public Map<String, String> getAllLocations(@PathVariable Long id) {
 
