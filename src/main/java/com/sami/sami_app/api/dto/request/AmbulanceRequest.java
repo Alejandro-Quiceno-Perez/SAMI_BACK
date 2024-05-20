@@ -2,6 +2,7 @@ package com.sami.sami_app.api.dto.request;
 
 import com.sami.sami_app.util.enums.StatusAmbulance;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,7 +29,9 @@ public class AmbulanceRequest {
     @NotNull(message = "The longitude is required")
     private Double longitude;
     @NotNull(message = "The driver Id is required")
+    @Min(value = 1, message = "The id of the driver must be greater than zero")
     private Long idDriver;
     @NotNull(message = "The emt Id is required")
+    @Min(value = 1, message = "The id of the emt must be greater than zero")
     private Long idEmt;
 }
