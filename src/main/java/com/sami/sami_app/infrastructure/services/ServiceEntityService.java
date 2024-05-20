@@ -3,9 +3,7 @@ package com.sami.sami_app.infrastructure.services;
 import com.sami.sami_app.domain.entities.Ambulance;
 import com.sami.sami_app.domain.entities.Hospital;
 import com.sami.sami_app.domain.entities.ServiceEntity;
-import com.sami.sami_app.domain.entities.User;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

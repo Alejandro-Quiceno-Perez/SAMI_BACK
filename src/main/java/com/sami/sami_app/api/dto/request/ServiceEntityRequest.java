@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import com.sami.sami_app.util.enums.StatusService;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.DecimalMin;
