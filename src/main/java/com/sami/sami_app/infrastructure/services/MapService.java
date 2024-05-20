@@ -48,7 +48,7 @@ public class MapService implements IMapService {
             result.put("estimatedTime", estimatedTime);
             result.put("status", "success");
         } catch (Exception e) {
-            result.put("error", "Error al calcular el tiempo estimado de servicio: " + e.getMessage());
+            result.put("error", "Error when calculating the estimated time of service:" + e.getMessage());
             result.put("status", "error");
         }
 
@@ -63,10 +63,10 @@ public class MapService implements IMapService {
             if (results.length > 0) {
                 return results[0].geometry.location.toString();
             } else {
-                return "No se encontraron resultados";
+                return "No results found";
             }
         } catch (Exception e) {
-            return "Error al realizar la geolocalización: " + e.getMessage();
+            return "Error when performing geolocation: " + e.getMessage();
         }
     }
 }

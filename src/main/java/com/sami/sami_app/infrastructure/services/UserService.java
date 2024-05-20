@@ -56,7 +56,7 @@ public class UserService implements IUserService {
     }
 
     private User find(Long id) {
-        return this.userRepository.findById(id).orElseThrow();
+        return this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("No user was found with this ID: " + id));
     }
 
     private UserResponse entityToResponse(User entity) {

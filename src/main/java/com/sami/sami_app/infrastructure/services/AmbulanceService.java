@@ -85,8 +85,8 @@ public class AmbulanceService implements IAmbulanceService {
                 .status(request.getStatus())
                 .latitudeAmbulance(request.getLatitudeAmbulance())
                 .longitudeAmbulance(request.getLongitudeAmbulance())
-                .driver(findUser(request.getIdDriver(), "driver"))
-                .emt(findUser(request.getIdEmt(), "emt"))
+                .driver(findUser(request.getIdDriver(), "Driver"))
+                .emt(findUser(request.getIdEmt(), "EMT"))
                 .build();
     }
 
@@ -97,6 +97,7 @@ public class AmbulanceService implements IAmbulanceService {
     }
 
     private User findUser(Long id, String type) {
-        return userRepository.findById(id).orElseThrow();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No Ambulance was found with this ID: " + id));
     }
 }

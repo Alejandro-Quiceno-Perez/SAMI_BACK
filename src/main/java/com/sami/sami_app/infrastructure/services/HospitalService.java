@@ -70,7 +70,7 @@ public class HospitalService implements IHospitalService {
 
     private Hospital find(Long id) {
         return this.hospitalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No hospital was found with this ID:" + id));
+                .orElseThrow(() -> new RuntimeException("No hospital was found with this ID: " + id));
     }
 
     private HospitalResponse entityToResponse(Hospital entity) {
