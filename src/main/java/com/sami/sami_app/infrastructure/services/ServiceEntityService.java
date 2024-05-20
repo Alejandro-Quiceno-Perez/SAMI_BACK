@@ -23,12 +23,8 @@ import com.sami.sami_app.domain.repositories.ServiceEntityRepository;
 import com.sami.sami_app.domain.repositories.UserRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IServiceEntityService;
 import com.sami.sami_app.util.enums.SortType;
-import com.sami.sami_app.util.enums.StatusService;
-
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -88,11 +84,6 @@ public class ServiceEntityService implements IServiceEntityService {
         this.serviceEntityRepository.delete(this.find(id));
     }
 
-    @Override
-    public List<ServiceEntityRequest> search(StatusService statusService) {
-        throw new UnsupportedOperationException("Unimplemented method 'search'");
-    }
-
     private ServiceEntityResponse entityToResponse(ServiceEntity entity) {
 
         return ServiceEntityResponse.builder()
@@ -124,7 +115,7 @@ public class ServiceEntityService implements IServiceEntityService {
 
     private ServiceEntity find(Long id) {
         return this.serviceEntityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se encontró el servicio con el ID: " + id));
+                .orElseThrow(() -> new RuntimeException("No service was found with this ID: " + id));
     }
 
     /*-

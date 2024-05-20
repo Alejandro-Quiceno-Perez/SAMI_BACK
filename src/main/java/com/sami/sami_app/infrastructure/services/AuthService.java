@@ -17,6 +17,7 @@ import com.sami.sami_app.domain.repositories.UserRepository;
 import com.sami.sami_app.infrastructure.abstract_services.IAuthService;
 import com.sami.sami_app.infrastructure.helpers.JwtService;
 import com.sami.sami_app.util.enums.Role;
+import com.sami.sami_app.util.exceptions.BadRequestException;
 
 import lombok.AllArgsConstructor;
 
@@ -41,12 +42,12 @@ public class AuthService implements IAuthService {
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (Exception e) {
-            throw new RuntimeException("Invalid credentials");
+            throw new BadRequestException("Invalid credentials");
         }
 
         Account account = this.findByUserEmail(request.getEmail());
         if (account == null) {
-            throw new RuntimeException("User email is not registered");
+            throw new BadRequestException("User email is not registered");
         }
 
         return AuthResp.builder()
@@ -60,7 +61,7 @@ public class AuthService implements IAuthService {
         //validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
-            throw new RuntimeException("This email is already registered");
+            throw new BadRequestException("This email is already registered");
         }
 
         Account account = Account.builder()
@@ -81,7 +82,7 @@ public class AuthService implements IAuthService {
         //validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
-            throw new RuntimeException("The email is already registered");
+            throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
@@ -110,7 +111,7 @@ public class AuthService implements IAuthService {
         //validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
-            throw new RuntimeException("The email is already registered");
+            throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
@@ -131,7 +132,7 @@ public class AuthService implements IAuthService {
         //validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
-            throw new RuntimeException("The email is already registered");
+            throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
@@ -152,7 +153,7 @@ public class AuthService implements IAuthService {
         //validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
-            throw new RuntimeException("The email is already registered");
+            throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
