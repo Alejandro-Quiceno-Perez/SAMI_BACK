@@ -42,11 +42,11 @@ public class Hospital {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(name = "latitude_location", nullable = false)
-    private Double latitude;
+    @Column(name = "latitude_hospital", nullable = false)
+    private Double latitudeHospital;
 
-    @Column(name = "longitude_location", nullable = false)
-    private Double longitude;
+    @Column(name = "longitude_hospital", nullable = false)
+    private Double longitudeHospital;
 
     @Column(nullable = false, length = 200)
     private String address;

@@ -70,8 +70,8 @@ public class AmbulanceService implements IAmbulanceService {
                 .vehiclePlate(entity.getVehiclePlate())
                 .ambulanceType(entity.getAmbulanceType())
                 .status(entity.getStatus())
-                .latitude(entity.getLatitude())
-                .longitude(entity.getLongitude())
+                .latitudeAmbulance(entity.getLatitudeAmbulance())
+                .longitudeAmbulance(entity.getLongitudeAmbulance())
                 .emt(userToResponse(entity.getEmt()))
                 .driver(userToResponse(entity.getDriver()))
                 .build();
@@ -83,8 +83,8 @@ public class AmbulanceService implements IAmbulanceService {
                 .vehiclePlate(request.getVehiclePlate())
                 .ambulanceType(request.getAmbulanceType())
                 .status(request.getStatus())
-                .latitude(request.getLatitude())
-                .longitude(request.getLongitude())
+                .latitudeAmbulance(request.getLatitudeAmbulance())
+                .longitudeAmbulance(request.getLongitudeAmbulance())
                 .driver(findUser(request.getIdDriver(), "driver"))
                 .emt(findUser(request.getIdEmt(), "emt"))
                 .build();

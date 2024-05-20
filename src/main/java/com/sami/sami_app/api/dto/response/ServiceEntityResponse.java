@@ -1,5 +1,7 @@
 package com.sami.sami_app.api.dto.response;
 
+import java.math.BigDecimal;
+
 import com.sami.sami_app.util.enums.StatusService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ServiceEntityResponse {
     private long idService;
-    private double latidudeLocation;
-    private double longitudeLocation;
+    private double latitudeService;
+    private double longitudeService;
+    private BigDecimal price;
     private StatusService statusService;
     private String anamnesis;
     private HospitalBasicResponse hospital;

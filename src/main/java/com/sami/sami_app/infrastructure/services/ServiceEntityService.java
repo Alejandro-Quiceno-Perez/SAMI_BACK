@@ -97,9 +97,10 @@ public class ServiceEntityService implements IServiceEntityService {
 
         return ServiceEntityResponse.builder()
                 .idService(entity.getIdService())
-                .latidudeLocation(entity.getLatitude())
-                .longitudeLocation(entity.getLongitude())
+                .latitudeService(entity.getLatitudeService())
+                .longitudeService(entity.getLongitudeService())
                 .statusService(entity.getStatus())
+                .price(entity.getPrice())
                 .anamnesis(entity.getAnamnesis())
                 .hospital(hospitalToResponse(entity.getHospital()))
                 .ambulance(ambulanceToResponse(entity.getAmbulance()))
@@ -111,8 +112,8 @@ public class ServiceEntityService implements IServiceEntityService {
     private ServiceEntity requestToEntity(ServiceEntityRequest request) {
 
         return ServiceEntity.builder()
-                .latitude(request.getLatidudeLocation())
-                .longitude(request.getLongitudeLocation())
+                .latitudeService(request.getLatidudeService())
+                .longitudeService(request.getLongitudeService())
                 .status(request.getStatusService())
                 .anamnesis(request.getAnamnesis())
                 .ambulance(this.ambulanceRepository.findById(request.getIdAmbulance()).orElseThrow())
@@ -136,8 +137,8 @@ public class ServiceEntityService implements IServiceEntityService {
                 .vehiclePlate(entity.getVehiclePlate())
                 .ambulanceType(entity.getAmbulanceType())
                 .status(entity.getStatus())
-                .latitude(entity.getLatitude())
-                .longitude(entity.getLongitude())
+                .latitudeAmbulance(entity.getLatitudeAmbulance())
+                .longitudeAmbulance(entity.getLongitudeAmbulance())
                 .emt(userToResponse(entity.getEmt()))
                 .driver(userToResponse(entity.getDriver()))
                 .build();
