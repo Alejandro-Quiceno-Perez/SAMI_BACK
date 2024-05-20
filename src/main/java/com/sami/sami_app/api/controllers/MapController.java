@@ -10,15 +10,41 @@ import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
 import com.sami.sami_app.infrastructure.services.ServiceEntityService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
+/**
+ * MAP CONTROLLER
+ * 
+ * The map controller is in charge of all the management of capturing the *location (latitude-longitude) of the service, ambulance and hospital.
+ */
+
+ 
+//SWAGGER
+@Tag(name="Map controller") 
 @Controller
 public class MapController {
 
     @Autowired
     private IMapService mapService;
-
     @Autowired
     private ServiceEntityService serviceEntityService;
 
+    //SWAGGER 
+    @Operation(
+        summary = "Capture all service locations",
+        description = "captures the latitude and longitude of the service, ambulance and hospital."
+    )
+     @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved list"),
+        @ApiResponse(responseCode = "400", description = "Bad Request"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     @PostMapping("/locations/{id}")
     public Map<String, String> getAllLocations(@PathVariable Long id) {
 
@@ -42,6 +68,7 @@ public class MapController {
         locations.put("Ambulance", mapService.getPosition(ambulanceLatitude, ambulanceLongitude));
         locations.put("Hospital", mapService.getPosition(hospitalLatitude, hospitalLongitude));
 
+        //returns all locations 
         return locations;
     }
 }
