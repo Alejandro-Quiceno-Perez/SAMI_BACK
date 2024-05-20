@@ -1,7 +1,6 @@
 package com.sami.sami_app.domain.entities;
 
-import java.util.Collection;
-import java.util.List;
+
 import com.sami.sami_app.util.enums.Role;
 
 import jakarta.persistence.CascadeType;
@@ -14,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity(name = "Account")
+@Entity(name = "account")
 @Data
 @Builder
 @AllArgsConstructor
@@ -31,16 +31,20 @@ public class Account  implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_account")
-    private String id;
 
+    private String id;
+    private String idAccount;
+
+
+    @Email
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToOne(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

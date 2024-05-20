@@ -1,5 +1,6 @@
 package com.sami.sami_app.domain.entities;
 
+import com.sami.sami_app.util.enums.AmbulanceType;
 import com.sami.sami_app.util.enums.StatusAmbulance;
 
 import jakarta.persistence.Column;
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,31 +27,33 @@ import lombok.NoArgsConstructor;
 *----------------------------------------------------------------------------------------------------------
 */
 
-@Entity(name = "Ambulance")
+@Entity(name = "ambulance")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ambulance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ambulance")
-    private Long id;
+    private Long idAmbulance;
 
     @Column(name = "vehicle_plate", nullable = false, length = 10)
     private String vehiclePlate;
 
-    @Column(name = "ambulance_type", nullable = false, length = 50)
-    private String ambulanceType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ambulance_type", nullable = false)
+    private AmbulanceType ambulanceType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private StatusAmbulance status;
 
     @Column(name = "latitude_ambulance", nullable = false)
-    private Double latitude;
+    private Double latitudeAmbulance;
 
     @Column(name = "longitude_ambulance", nullable = false)
-    private Double longitude;
+    private Double longitudeAmbulance;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_driver", referencedColumnName = "id_user")
