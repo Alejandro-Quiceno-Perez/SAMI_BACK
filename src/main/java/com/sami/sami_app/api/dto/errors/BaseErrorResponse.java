@@ -1,4 +1,4 @@
-package com.sami.sami_app.api.error_handler;
+package com.sami.sami_app.api.dto.errors;
 
 import java.io.Serializable;
 

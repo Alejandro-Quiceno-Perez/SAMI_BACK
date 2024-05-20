@@ -1,6 +1,8 @@
-package com.sami.sami_app.api.error_handler;
+package com.sami.sami_app.api.dto.errors;
+
 
 import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListErrorsResponse extends BaseErrorResponse {
-    private List<String> errors;
+    private List<Map<String,String>> errors;
 
     
 }
