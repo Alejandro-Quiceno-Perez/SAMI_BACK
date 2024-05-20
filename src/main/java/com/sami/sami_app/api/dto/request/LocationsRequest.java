@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * LOCATION REQUEST DTO - GOOGLE MAP API
  */
 @Data
-@Builder 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "DTO for Locations requests")
@@ -27,7 +27,7 @@ public class LocationsRequest {
     
     @Schema(description = "longitude of ambulance", example = "50.1234")
     private Double ambulanceLongitude;
-    
+
     @Schema(description = "latitude of hospital", example = "50.1234")
     private Double hospitalLatitude;
     

@@ -48,6 +48,7 @@ public class ServiceController {
     @Autowired
     IServiceEntityService service;
 
+
      //SWAGGER 
     @Operation(
         summary = "Displays all Services with pagination and SORT",
@@ -61,20 +62,20 @@ public class ServiceController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
     //method that retrieves a paged list of all available ambulances.
-     @GetMapping
+   
+    @GetMapping
     public ResponseEntity<Page<ServiceEntityResponse>> getAll(
-        @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "5") int size,
-        @RequestHeader(required = false) SortType sortType
-    ){
-        
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestHeader(required = false) SortType sortType) {
+
         if (Objects.isNull(sortType)) {
             sortType = SortType.NONE;
         }
 
-        return ResponseEntity.ok(this.service.getAll(page -1, size, sortType));
+        return ResponseEntity.ok(this.service.getAll(page - 1, size, sortType));
     }
-    
+
     //SWAGGER
     @Operation(
         summary = "Displays one Service by id",
@@ -89,6 +90,7 @@ public class ServiceController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
     //method that retrieves an service by ID.
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<ServiceEntityResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(this.service.getById(id));
@@ -108,12 +110,12 @@ public class ServiceController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
     //method that creates an service
-     @PostMapping(path = "/create")
+    @PostMapping(path = "/create")
     public ResponseEntity<ServiceEntityResponse> create(
-       @Validated @RequestBody ServiceEntityRequest request
-    ){
+            @Validated @RequestBody ServiceEntityRequest request) {
         return ResponseEntity.ok(this.service.create(request));
     }
+
 
      //SWAGGER
      @Operation(
@@ -128,9 +130,11 @@ public class ServiceController {
         @ApiResponse(responseCode = "404", description = "Service not found"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
+
     //method that eliminates an ambulance
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+
         this.service.delete(id);
 
         return ResponseEntity.noContent().build();
@@ -151,11 +155,11 @@ public class ServiceController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
     //method that update an ambulance registered
-    @PutMapping(path = "/{id}" )
+    @PutMapping(path = "/update/{id}")
+
     public ResponseEntity<ServiceEntityResponse> update(
-        @Validated @RequestBody ServiceEntityRequest request,
-        @PathVariable Long id
-    ){
+            @Validated @RequestBody ServiceEntityRequest request,
+            @PathVariable Long id) {
         return ResponseEntity.ok(this.service.update(request, id));
     }
 

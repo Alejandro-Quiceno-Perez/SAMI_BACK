@@ -125,6 +125,7 @@ public class HospitalController {
         return ResponseEntity.noContent().build();
     }
 
+
     //SWAGGER
     @Operation(
         summary = "update one Hospital by id",
@@ -138,8 +139,10 @@ public class HospitalController {
         @ApiResponse(responseCode = "404", description = "Hospital not found"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
+    
     //method that update an hopsital registered
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/update/{id}")
+
     public ResponseEntity<HospitalResponse> update(
             @Validated @RequestBody HospitalRequest request,
             @PathVariable Long id) {

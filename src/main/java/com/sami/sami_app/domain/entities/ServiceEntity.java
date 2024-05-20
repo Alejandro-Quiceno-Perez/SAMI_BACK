@@ -1,5 +1,7 @@
 package com.sami.sami_app.domain.entities;
 
+import java.math.BigDecimal;
+
 import com.sami.sami_app.util.enums.StatusService;
 
 import jakarta.persistence.Column;
@@ -26,7 +28,7 @@ import lombok.NoArgsConstructor;
     other entities.
  */
 
-@Entity(name = "Service")
+@Entity(name = "service")
 @Data
 @Builder
 @AllArgsConstructor
@@ -35,13 +37,15 @@ public class ServiceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_service")
-    private Long id;
+    private Long idService;
 
-    @Column(name = "latitude_location")
-    private double latitude;
+    @Column(name = "latitude_service")
+    private double latitudeService;
 
-    @Column(name = "longitude_location")
-    private double longitude;
+    @Column(name = "longitude_service")
+    private double longitudeService;
+
+    private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status_service", nullable = false)

@@ -51,7 +51,7 @@ public class AmbulanceService implements IAmbulanceService {
     public AmbulanceResponse update(AmbulanceRequest request, Long id) {
         Ambulance ambulance = this.find(id);
         ambulance = this.requestToEntity(request);
-        ambulance.setId(id);
+        ambulance.setIdAmbulance(id);
         return this.entityToResponse(this.ambulanceRepository.save(ambulance));
     }
 
@@ -66,12 +66,12 @@ public class AmbulanceService implements IAmbulanceService {
 
     private AmbulanceResponse entityToResponse(Ambulance entity) {
         return AmbulanceResponse.builder()
-                .id(entity.getId())
+                .idAmbulance(entity.getIdAmbulance())
                 .vehiclePlate(entity.getVehiclePlate())
                 .ambulanceType(entity.getAmbulanceType())
                 .status(entity.getStatus())
-                .latitude(entity.getLatitude())
-                .longitude(entity.getLongitude())
+                .latitudeAmbulance(entity.getLatitudeAmbulance())
+                .longitudeAmbulance(entity.getLongitudeAmbulance())
                 .emt(userToResponse(entity.getEmt()))
                 .driver(userToResponse(entity.getDriver()))
                 .build();
@@ -83,10 +83,10 @@ public class AmbulanceService implements IAmbulanceService {
                 .vehiclePlate(request.getVehiclePlate())
                 .ambulanceType(request.getAmbulanceType())
                 .status(request.getStatus())
-                .latitude(request.getLatitude())
-                .longitude(request.getLongitude())
-                .driver(findUser(request.getDriverId(), "driver"))
-                .emt(findUser(request.getEmtId(), "emt"))
+                .latitudeAmbulance(request.getLatitudeAmbulance())
+                .longitudeAmbulance(request.getLongitudeAmbulance())
+                .driver(findUser(request.getIdDriver(), "driver"))
+                .emt(findUser(request.getIdEmt(), "emt"))
                 .build();
     }
 

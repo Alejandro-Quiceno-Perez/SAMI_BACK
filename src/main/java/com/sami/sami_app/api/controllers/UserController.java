@@ -34,7 +34,7 @@ import lombok.AllArgsConstructor;
  */
 
 @RestController
-@RequestMapping(path = "/customer")
+@RequestMapping(path = "/user")
 @AllArgsConstructor
 @Controller
 public class UserController {
@@ -101,6 +101,7 @@ public class UserController {
         return ResponseEntity.ok(this.objIUserService.create(request));
     }
 
+
     //SWAGGER
     @Operation(
         summary = "Delete user by ID",
@@ -115,7 +116,7 @@ public class UserController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
     //method that eliminates an ambulance
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.objIUserService.delete(id);
 

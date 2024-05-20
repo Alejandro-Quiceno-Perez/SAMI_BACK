@@ -98,8 +98,10 @@ public class AmbulanceController {
         @ApiResponse(responseCode = "403", description = "Forbidden access"),
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
+
+
     //method that creates an ambulance
-    @PostMapping
+    @PostMapping(path = "/create")
     public ResponseEntity<AmbulanceResponse> create(
             @Validated @RequestBody AmbulanceRequest request) {
         return ResponseEntity.ok(this.iAmbulanceService.create(request));
@@ -119,13 +121,14 @@ public class AmbulanceController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
     //method that eliminates an ambulance
-    @DeleteMapping(path = "/{id}")
+    
+    @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         //delete ambulance
         this.iAmbulanceService.delete(id);
         return ResponseEntity.noContent().build();
     }
-    
+
     //SWAGGER
     @Operation(
         summary = "update one ambulance by id",
@@ -140,7 +143,7 @@ public class AmbulanceController {
         @ApiResponse(responseCode = "500", description = "Internal Server Error. Please contact support")
     })
     //method that update an ambulance registered
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/update/{id}")
     public ResponseEntity<AmbulanceResponse> update(
             @Validated @RequestBody AmbulanceRequest request,
             @PathVariable Long id) {
