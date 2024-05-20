@@ -1,6 +1,5 @@
 package com.sami.sami_app.domain.entities;
 
-
 import com.sami.sami_app.util.enums.Role;
 
 import jakarta.persistence.CascadeType;
@@ -18,6 +17,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +30,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account  implements UserDetails {
+public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_account")
 
     private String id;
     private String idAccount;
-
 
     @Email
     @Column(nullable = false, unique = true, length = 50)
@@ -52,7 +54,7 @@ public class Account  implements UserDetails {
 
     // User permissions
     @Override
-    public Collection <? extends GrantedAuthority> getAuthorities () {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
