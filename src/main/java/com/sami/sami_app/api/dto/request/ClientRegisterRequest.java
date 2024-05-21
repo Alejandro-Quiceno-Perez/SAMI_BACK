@@ -11,14 +11,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@EqualsAndHashCode(callSuper=true)
-@Data 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientRegisterRequest extends RegisterRequest {
 
-    
     @NotBlank(message = "The first name is required")
     @Size(max = 30, message = "the first name must have a maximum of 30 characters")
     private String firstName;
@@ -30,5 +29,5 @@ public class ClientRegisterRequest extends RegisterRequest {
     private String phone;
     @NotNull(message = "The RH is required")
     private RhType rhType;
-    
+
 }

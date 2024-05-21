@@ -1,5 +1,6 @@
 package com.sami.sami_app.api.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
+    @Email
     @NotBlank(message = "The Email is required")
     @Size(min = 3, max = 100, message = "Email must be between 3 and 150 characters")
     private String email;

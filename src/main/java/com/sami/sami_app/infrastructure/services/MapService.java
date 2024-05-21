@@ -13,7 +13,7 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
-import com.sami.sami_app.api.dto.request.LocationsRequest;
+import com.sami.sami_app.api.dto.response.LocationsResponse;
 // import com.sami.sami_app.infrastructure.AppConfig;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
 
@@ -27,11 +27,11 @@ public class MapService implements IMapService {
     // private AppConfig appConfig;
 
     // Método para calcular el tiempo estimado de servicio
-    public Map<String, String> getEstimatedTime(LocationsRequest locationsRequest) {
-        Double ambulanceLatitude = locationsRequest.getAmbulanceLatitude();
-        Double ambulanceLongitude = locationsRequest.getAmbulanceLongitude();
-        Double hospitalLatitude = locationsRequest.getHospitalLatitude();
-        Double hospitalLongitude = locationsRequest.getHospitalLongitude();
+    public Map<String, String> getEstimatedTime(LocationsResponse locationsResponse) {
+        Double ambulanceLatitude = locationsResponse.getAmbulanceLatitude();
+        Double ambulanceLongitude = locationsResponse.getAmbulanceLongitude();
+        Double hospitalLatitude = locationsResponse.getHospitalLatitude();
+        Double hospitalLongitude = locationsResponse.getHospitalLongitude();
 
         Map<String, String> result = new HashMap<>();
 

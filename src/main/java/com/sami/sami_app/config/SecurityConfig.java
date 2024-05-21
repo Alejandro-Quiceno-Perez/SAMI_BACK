@@ -20,36 +20,37 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    private final AuthenticationProvider authenticationProvider;
-    @Autowired
-    private final JwtAuthenticationFilter authenticationFilter;
+        @Autowired
+        private final AuthenticationProvider authenticationProvider;
 
-    // Crear rutas publicas
-    private static final String[] PUBLIC_RESOURCES = { "/services/public/get", "/auth/**" };
-    private static final String[] ADMIN_RESOURCES = { "/admin/**" };
-    private static final String[] AMBULANCE_RESOURCES = { "/ambulance/**" };
-    private static final String[] CLIENT_RESOURCES = { "/service/**" };
+        @Autowired
+        private final JwtAuthenticationFilter authenticationFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Crear rutas publicas
+        private final String[] PUBLIC_RESOURCES = { "/auth/**" };
+        private final String[] ADMIN_RESOURCES = { "/admin/**" };
+        private final String[] AMBULANCE_RESOURCES = { "/ambulance/**" };
+        private final String[] CLIENT_RESOURCES = { "/service/**", "/service" };
 
-        return http
-                .csrf(csrf -> csrf.disable()) // Deshabilitar protección csrf -> Stateless
-                .authorizeHttpRequests(authRequest -> authRequest
-                    .requestMatchers(PUBLIC_RESOURCES).permitAll()
-                    .requestMatchers(ADMIN_RESOURCES).hasAuthority(Role.ADMIN.name())
-                    .requestMatchers(CLIENT_RESOURCES).hasAuthority(Role.CLIENT.name())
-                    .requestMatchers(AMBULANCE_RESOURCES).hasAnyAuthority(Role.DRIVER.name(), Role.EMT.name())
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-                    .anyRequest().authenticated() 
-                )
-                .sessionManagement(sessionManager -> 
-                    sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Agregar el proveedor de autenticación
-                .authenticationProvider(authenticationProvider)
-                // Agregar el filtro personalizado antes del filtro de spring security
-                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+                return http
+                                .csrf(csrf -> csrf.disable()) // Deshabilitar protección csrf -> Stateless
+                                .authorizeHttpRequests(authRequest -> authRequest
+                                                .requestMatchers(ADMIN_RESOURCES).hasAuthority(Role.ADMIN.name())
+                                                .requestMatchers(CLIENT_RESOURCES).hasAuthority(Role.CLIENT.name())
+                                                .requestMatchers(AMBULANCE_RESOURCES)
+                                                .hasAnyAuthority(Role.DRIVER.name(), Role.EMT.name())
+                                                .requestMatchers(PUBLIC_RESOURCES).permitAll()
+                                                .anyRequest().authenticated())
+                                .sessionManagement(
+                                                sessionManager -> sessionManager
+                                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                // Agregar el proveedor de autenticación
+                                .authenticationProvider(authenticationProvider)
+                                // Agregar el filtro personalizado antes del filtro de spring security
+                                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                                .build();
+        }
 }

@@ -1,6 +1,5 @@
 package com.sami.sami_app.infrastructure.helpers;
 
-
 import com.sami.sami_app.domain.entities.Account;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,35 +21,35 @@ public class JwtService {
     private final String SECRET_KEY = "RVNUQSBDTEFWRSBFUyBHRU5FUkFEQSBQQVJBIExBIEZJUk1BIERFIExBUyBDVUVOVEFTIERFIFNBTUkgKi8t";
 
     // Encript Secret Key
-    public SecretKey getKey () {
-        //  Encrypt secret key
+    public SecretKey getKey() {
+        // Encrypt secret key
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         // return encrypted key
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
     // Build JWT
-    public String getToken(Map <String, Object> claims, Account account) {
+    public String getToken(Map<String, Object> claims, Account account) {
         return Jwts.builder()
-                .claims(claims) // JWT body 
+                .claims(claims) // JWT body
+                .subject(account.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(this.getKey()) // signature token
                 .compact();
     }
 
-    public String getToken (Account account) {
+    public String getToken(Account account) {
         // map
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", account.getId());
+        claims.put("idAccount", account.getIdAccount());
         claims.put("role", account.getRole().name());
 
         return getToken(claims, account);
     }
 
-
-    /*OBTAIN ALL CLAIMS*/
-    public Claims getAllClaims (String token) {
+    /* OBTAIN ALL CLAIMS */
+    public Claims getAllClaims(String token) {
         return Jwts
                 .parser()
                 .verifyWith(this.getKey())
@@ -59,17 +58,16 @@ public class JwtService {
                 .getPayload();
     }
 
-    public <T> T getClaim (String token, Function<Claims, T> claimsResolver) {
-        final  Claims claims = this.getAllClaims(token);
+    public <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = this.getAllClaims(token);
         return claimsResolver.apply(claims);
     }
-
 
     public String getUserEmailFromToken(String token) {
         return this.getClaim(token, Claims::getSubject);
     }
 
-    public Date getExpiration (String token) {
+    public Date getExpiration(String token) {
         return this.getClaim(token, Claims::getExpiration);
     }
 
@@ -77,7 +75,7 @@ public class JwtService {
         return this.getExpiration(token).before(new Date());
     }
 
-    public boolean isTokenIsValid (String token, UserDetails userDetails) {
+    public boolean isTokenIsValid(String token, UserDetails userDetails) {
         String userEmail = this.getUserEmailFromToken(token);
 
         return (userEmail.equals(userDetails.getUsername()) && !this.isTokenExpired(token));
