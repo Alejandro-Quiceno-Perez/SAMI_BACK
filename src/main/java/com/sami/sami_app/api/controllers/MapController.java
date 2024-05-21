@@ -1,6 +1,7 @@
 package com.sami.sami_app.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Map controller")
 @RestController
 @RequestMapping(path = "/map")
+@CrossOrigin(origins = "*")
 public class MapController {
 
     @SuppressWarnings("unused")
