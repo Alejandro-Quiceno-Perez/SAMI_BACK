@@ -44,7 +44,7 @@ public class BadRequestController {
 
         Map<String, String> error = new HashMap<>();
 
-        error.put("ID", exception.getMessage());
+        error.put("Message", exception.getMessage());
 
         errors.add(error);
 
