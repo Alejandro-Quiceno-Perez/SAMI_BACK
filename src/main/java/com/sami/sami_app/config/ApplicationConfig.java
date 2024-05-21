@@ -21,7 +21,8 @@ public class ApplicationConfig {
     private final AccountRepository accountRepository;
 
     @Bean // use Spring security default settings of AuthenticationManager
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 

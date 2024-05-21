@@ -32,6 +32,7 @@ public class JwtService {
     public String getToken(Map<String, Object> claims, Account account) {
         return Jwts.builder()
                 .claims(claims) // JWT body
+                .subject(account.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(this.getKey()) // signature token
