@@ -27,10 +27,14 @@ public class SecurityConfig {
         private final JwtAuthenticationFilter authenticationFilter;
 
         // Crear rutas publicas
-        private final String[] PUBLIC_RESOURCES = { "/auth/**" };
+        private final String[] PUBLIC_RESOURCES = { "/auth/**",
+                        "/swagger-ui/**", // Ruta de Swagger UI
+                        "/v3/api-docs/**", // Documentación de API
+                        "/swagger-resources/**", // Recursos de Swagger
+                        "/webjars/**" }; // Recursos de Webjars
         private final String[] ADMIN_RESOURCES = { "/admin/**" };
         private final String[] AMBULANCE_RESOURCES = { "/ambulance/**" };
-        private final String[] CLIENT_RESOURCES = { "/service/**", "/service" };
+        private final String[] CLIENT_RESOURCES = { "/service/**" };
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
