@@ -20,11 +20,12 @@ public class ApplicationConfig {
     @Autowired
     private final AccountRepository accountRepository;
 
-    @Bean //use Spring security default settings of AuthenticationManager
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration config) throws Exception {
+    @Bean // use Spring security default settings of AuthenticationManager
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-    //The user's information provider. indicates that it can and cannot do this.
+
+    @Bean // The user's information provider. indicates that it can and cannot do this.
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 
@@ -36,11 +37,12 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return emailUser -> accountRepository.findByEmail(emailUser).orElseThrow(() -> new UsernameNotFoundException("Email not found."));
+        return emailUser -> accountRepository.findByEmail(emailUser)
+                .orElseThrow(() -> new UsernameNotFoundException("Email not found."));
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder () {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

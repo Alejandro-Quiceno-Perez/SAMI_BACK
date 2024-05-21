@@ -32,7 +32,7 @@ public class AuthService implements IAuthService {
     @Autowired
     private final JwtService jwtService;
     @Autowired
-    private final PasswordEncoder passwordEncoder; 
+    private final PasswordEncoder passwordEncoder;
     @Autowired
     private final AuthenticationManager authenticationManager;
 
@@ -40,7 +40,7 @@ public class AuthService implements IAuthService {
     public AuthResp login(LoginRequest request) {
         try {
             authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (Exception e) {
             throw new BadRequestException("Invalid credentials");
         }
@@ -51,123 +51,127 @@ public class AuthService implements IAuthService {
         }
 
         return AuthResp.builder()
-            .message("Authenticated properly")
-            .token(this.jwtService.getToken(account))
-            .build();
+                .message("Authenticated properly")
+                .token(this.jwtService.getToken(account))
+                .build();
     }
 
     @Override
     public AuthResp register(RegisterRequest request) {
-        //validates if the email exists in the database
+        // validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
             throw new BadRequestException("This email is already registered");
         }
 
         Account account = Account.builder()
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .role(Role.CLIENT)  // Default role for registration
-            .build();
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.CLIENT) // Default role for registration
+                .build();
 
         this.accountRepository.save(account);
 
         return AuthResp.builder()
-            .message("Successful registration")
-            .token(this.jwtService.getToken(account))
-            .build();
+                .message("Successful registration")
+                .token(this.jwtService.getToken(account))
+                .build();
     }
 
+    @Override
     public AuthResp registerClient(ClientRegisterRequest request) {
-        //validates if the email exists in the database
+        // validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
             throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .role(Role.CLIENT)  // Role for client registration
-            .build();
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.CLIENT) // Role for client registration
+                .build();
         Account accountSave = this.accountRepository.save(account);
 
         User user = User.builder()
-            .firstName(request.getFirstName())
-            .lastName(request.getLastName())
-            .phone(request.getPhone())
-            .rhType(request.getRhType())
-            .account(accountSave)
-            .build();
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .phone(request.getPhone())
+                .rhType(request.getRhType())
+                .account(accountSave)
+                .build();
         this.userRepository.save(user);
 
         return AuthResp.builder()
-            .message("Client registration successful")
-            .token(this.jwtService.getToken(accountSave))
-            .build();
+                .message("Client registration successful")
+                .token(this.jwtService.getToken(accountSave))
+                .build();
     }
 
+    @Override
     public AuthResp registerAdmin(RegisterRequest request) {
-        //validates if the email exists in the database
+        // validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
             throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .role(Role.ADMIN)  // Role for admin registration
-            .build();
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.ADMIN) // Role for admin registration
+                .build();
 
         this.accountRepository.save(account);
 
         return AuthResp.builder()
-            .message("Admin registration successful")
-            .token(this.jwtService.getToken(account))
-            .build();
+                .message("Admin registration successful")
+                .token(this.jwtService.getToken(account))
+                .build();
     }
 
+    @Override
     public AuthResp registerDriver(RegisterRequest request) {
-        //validates if the email exists in the database
+        // validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
             throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .role(Role.DRIVER)  // Role for driver registration
-            .build();
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.DRIVER) // Role for driver registration
+                .build();
 
         this.accountRepository.save(account);
 
         return AuthResp.builder()
-            .message("Driver registration successful")
-            .token(this.jwtService.getToken(account))
-            .build();
+                .message("Driver registration successful")
+                .token(this.jwtService.getToken(account))
+                .build();
     }
 
+    @Override
     public AuthResp registerEmt(RegisterRequest request) {
-        //validates if the email exists in the database
+        // validates if the email exists in the database
         Account exist = this.findByUserEmail(request.getEmail());
         if (exist != null) {
             throw new BadRequestException("The email is already registered");
         }
 
         Account account = Account.builder()
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .role(Role.EMT)  // Role for EMT registration
-            .build();
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.EMT) // Role for EMT registration
+                .build();
 
         this.accountRepository.save(account);
 
         return AuthResp.builder()
-            .message("EMT registration successful")
-            .token(this.jwtService.getToken(account))
-            .build();
+                .message("EMT registration successful")
+                .token(this.jwtService.getToken(account))
+                .build();
     }
 
     private Account findByUserEmail(String userEmail) {

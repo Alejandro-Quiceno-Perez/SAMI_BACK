@@ -22,14 +22,15 @@ public class SecurityConfig {
 
     @Autowired
     private final AuthenticationProvider authenticationProvider;
+    
     @Autowired
     private final JwtAuthenticationFilter authenticationFilter;
 
     // Crear rutas publicas
-    private static final String[] PUBLIC_RESOURCES = { "/services/public/get", "/auth/**" };
-    private static final String[] ADMIN_RESOURCES = { "/admin/**" };
-    private static final String[] AMBULANCE_RESOURCES = { "/ambulance/**" };
-    private static final String[] CLIENT_RESOURCES = { "/service/**" };
+    private final String[] PUBLIC_RESOURCES = { "/services/public/get", "/auth/**" };
+    private final String[] ADMIN_RESOURCES = { "/admin/**" };
+    private final String[] AMBULANCE_RESOURCES = { "/ambulance/**" };
+    private final String[] CLIENT_RESOURCES = { "/service/**" };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
