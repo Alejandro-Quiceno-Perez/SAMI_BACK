@@ -66,7 +66,7 @@ public class HospitalController {
     public ResponseEntity<Page<HospitalResponse>> getAll(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(this.iHospitalService.getAll(page - 1, size, SortType.NONE));
+                return null;
     }
 
     //SWAGGER
@@ -85,7 +85,7 @@ public class HospitalController {
     //method that retrieves an hospital by ID.
     @GetMapping(path = "/{id}")
     public ResponseEntity<HospitalResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.iHospitalService.getById(id));
+        return null;
     }
 
     //SWAGGER
@@ -104,7 +104,7 @@ public class HospitalController {
     @PostMapping(path = "/create")
     public ResponseEntity<HospitalResponse> create(
             @Validated @RequestBody HospitalRequest request) {
-        return ResponseEntity.ok(this.iHospitalService.create(request));
+                return null;
     }
 
      //SWAGGER
@@ -123,8 +123,7 @@ public class HospitalController {
     //method that eliminates an hospital
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.iHospitalService.delete(id);
-        return ResponseEntity.noContent().build();
+        return null;
     }
 
 
@@ -148,6 +147,6 @@ public class HospitalController {
     public ResponseEntity<HospitalResponse> update(
             @Validated @RequestBody HospitalRequest request,
             @PathVariable Long id) {
-        return ResponseEntity.ok(this.iHospitalService.update(request, id));
+                return null;
     }
 }

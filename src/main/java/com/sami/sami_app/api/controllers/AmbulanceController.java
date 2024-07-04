@@ -66,7 +66,7 @@ public class AmbulanceController {
     public ResponseEntity<Page<AmbulanceResponse>> getAll(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(this.iAmbulanceService.getAll(page - 1, size, SortType.NONE));
+        return null;
     }
 
     // SWAGGER
@@ -82,7 +82,7 @@ public class AmbulanceController {
     // method that retrieves an ambulance by ID.
     @GetMapping(path = "/{id}")
     public ResponseEntity<AmbulanceResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.iAmbulanceService.getById(id));
+        return null;
     }
 
     // SWAGGER
@@ -99,7 +99,7 @@ public class AmbulanceController {
     @PostMapping(path = "/create")
     public ResponseEntity<AmbulanceResponse> create(
             @Validated @RequestBody AmbulanceRequest request) {
-        return ResponseEntity.ok(this.iAmbulanceService.create(request));
+                return null;
     }
 
     // SWAGGER
@@ -116,9 +116,8 @@ public class AmbulanceController {
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        // delete ambulance
-        this.iAmbulanceService.delete(id);
-        return ResponseEntity.noContent().build();
+        
+        return null;
     }
 
     // SWAGGER
@@ -136,6 +135,6 @@ public class AmbulanceController {
     public ResponseEntity<AmbulanceResponse> update(
             @Validated @RequestBody AmbulanceRequest request,
             @PathVariable Long id) {
-        return ResponseEntity.ok(this.iAmbulanceService.update(request, id));
+                return null;
     }
 }

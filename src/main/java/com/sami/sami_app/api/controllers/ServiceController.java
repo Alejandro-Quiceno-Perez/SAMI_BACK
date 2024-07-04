@@ -75,7 +75,7 @@ public class ServiceController {
             sortType = SortType.NONE;
         }
 
-        return ResponseEntity.ok(this.service.getAll(page - 1, size, sortType));
+        return null;
     }
 
     //SWAGGER
@@ -95,7 +95,7 @@ public class ServiceController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<ServiceEntityResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.service.getById(id));
+        return null;
     }
 
 
@@ -115,7 +115,7 @@ public class ServiceController {
     @PostMapping(path = "/create")
     public ResponseEntity<ServiceEntityResponse> create(
             @Validated @RequestBody ServiceEntityRequest request) {
-        return ResponseEntity.ok(this.service.create(request));
+                return null;
     }
 
 
@@ -137,9 +137,7 @@ public class ServiceController {
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 
-        this.service.delete(id);
-
-        return ResponseEntity.noContent().build();
+        return null;
     }
 
 
@@ -162,7 +160,7 @@ public class ServiceController {
     public ResponseEntity<ServiceEntityResponse> update(
             @Validated @RequestBody ServiceEntityRequest request,
             @PathVariable Long id) {
-        return ResponseEntity.ok(this.service.update(request, id));
+                return null;
     }
 
 }

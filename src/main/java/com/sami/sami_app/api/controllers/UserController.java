@@ -62,7 +62,7 @@ public class UserController {
     public ResponseEntity<Page<UserResponse>> getAll(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(this.objIUserService.getAll(page - 1, size, SortType.NONE));
+                return null;
     }
 
     //SWAGGER
@@ -81,7 +81,7 @@ public class UserController {
     //method that retrieves an user by ID.
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.objIUserService.getById(id));
+        return null;
     }
 
      //SWAGGER
@@ -100,7 +100,7 @@ public class UserController {
     @PostMapping(path = "/create")
     public ResponseEntity<UserResponse> create(
             @Validated @RequestBody UserRequest request) {
-        return ResponseEntity.ok(this.objIUserService.create(request));
+                return null;
     }
 
 
@@ -120,9 +120,7 @@ public class UserController {
     //method that eliminates an ambulance
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.objIUserService.delete(id);
-
-        return ResponseEntity.noContent().build();
+        return null;
     }
 
     //SWAGGER
@@ -143,6 +141,6 @@ public class UserController {
     public ResponseEntity<UserResponse> update(
             @Validated @RequestBody UserRequest request,
             @PathVariable Long id) {
-        return ResponseEntity.ok(this.objIUserService.update(request, id));
+                return null;
     }
 }

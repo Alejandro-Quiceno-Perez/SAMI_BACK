@@ -52,17 +52,9 @@ public class MapController {
     public LocationsResponse getAllLocations(@PathVariable Long id) {
 
         // search service by id
-        ServiceEntityResponse serviceEntityResponse = this.serviceEntityService.getById(id);
+       
 
         // returns all locations
-        return LocationsResponse
-                .builder()
-                .serviceLatitude(serviceEntityResponse.getLatitudeService())
-                .serviceLongitude(serviceEntityResponse.getLongitudeService())
-                .ambulanceLatitude(serviceEntityResponse.getAmbulance().getLatitudeAmbulance())
-                .ambulanceLongitude(serviceEntityResponse.getAmbulance().getLongitudeAmbulance())
-                .hospitalLatitude(serviceEntityResponse.getHospital().getLatitudeHospital())
-                .hospitalLongitude(serviceEntityResponse.getHospital().getLongitudeHospital())
-                .build();
+        return null;
     }
 }
