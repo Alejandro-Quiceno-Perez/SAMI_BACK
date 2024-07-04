@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.sami.sami_app.api.dto.request.UserRequest;
+import com.sami.sami_app.api.dto.request.create.UserRequest;
 import com.sami.sami_app.api.dto.response.UserResponse;
 import com.sami.sami_app.domain.entities.User;
 import com.sami.sami_app.domain.repositories.UserRepository;

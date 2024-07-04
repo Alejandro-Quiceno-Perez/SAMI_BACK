@@ -6,9 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.sami.sami_app.api.dto.request.ClientRegisterRequest;
-import com.sami.sami_app.api.dto.request.LoginRequest;
-import com.sami.sami_app.api.dto.request.RegisterRequest;
+import com.sami.sami_app.api.dto.request.create.ClientRegisterRequest;
+import com.sami.sami_app.api.dto.request.create.LoginRequest;
+import com.sami.sami_app.api.dto.request.create.RegisterRequest;
 import com.sami.sami_app.api.dto.response.AuthResp;
 import com.sami.sami_app.domain.entities.Account;
 import com.sami.sami_app.domain.entities.User;

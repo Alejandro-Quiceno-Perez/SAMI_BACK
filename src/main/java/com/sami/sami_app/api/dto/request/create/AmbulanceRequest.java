@@ -1,4 +1,4 @@
-package com.sami.sami_app.api.dto.request;
+package com.sami.sami_app.api.dto.request.create;
 
 import com.sami.sami_app.util.enums.AmbulanceType;
 import com.sami.sami_app.util.enums.StatusAmbulance;
@@ -11,15 +11,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * AMBULANCE REQUEST DTO
  */
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "DTO for ambulance requests")

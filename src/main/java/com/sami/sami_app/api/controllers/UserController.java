@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sami.sami_app.api.dto.request.UserRequest;
+import com.sami.sami_app.api.dto.request.create.UserRequest;
 import com.sami.sami_app.api.dto.response.UserResponse;
 import com.sami.sami_app.infrastructure.abstract_services.IUserService;
 

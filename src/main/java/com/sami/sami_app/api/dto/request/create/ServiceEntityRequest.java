@@ -1,9 +1,9 @@
-package com.sami.sami_app.api.dto.request;
+package com.sami.sami_app.api.dto.request.create;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import com.sami.sami_app.util.enums.StatusService;
 
@@ -18,8 +18,8 @@ import jakarta.validation.constraints.DecimalMax;
  * SERVICE REQUEST DTO
  */
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "DTO for service entity requests")

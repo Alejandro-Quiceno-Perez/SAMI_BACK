@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.sami.sami_app.api.dto.request.HospitalRequest;
+import com.sami.sami_app.api.dto.request.create.HospitalRequest;
 import com.sami.sami_app.api.dto.response.AmbulanceResponse;
 import com.sami.sami_app.api.dto.response.HospitalResponse;
 import com.sami.sami_app.api.dto.response.ServicesInHospital;

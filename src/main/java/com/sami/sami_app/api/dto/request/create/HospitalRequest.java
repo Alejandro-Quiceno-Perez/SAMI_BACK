@@ -1,4 +1,4 @@
-package com.sami.sami_app.api.dto.request;
+package com.sami.sami_app.api.dto.request.create;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.sami.sami_app.util.enums.ComplexityGrade;
@@ -9,12 +9,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "DTO for Hospital requests")

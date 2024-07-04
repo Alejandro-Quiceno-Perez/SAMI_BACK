@@ -1,4 +1,4 @@
-package com.sami.sami_app.api.dto.request;
+package com.sami.sami_app.api.dto.request.create;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

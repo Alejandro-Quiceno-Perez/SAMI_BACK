@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sami.sami_app.api.dto.request.HospitalRequest;
+import com.sami.sami_app.api.dto.request.create.HospitalRequest;
 import com.sami.sami_app.api.dto.response.HospitalResponse;
 import com.sami.sami_app.infrastructure.abstract_services.IHospitalService;
 import com.sami.sami_app.util.enums.SortType;

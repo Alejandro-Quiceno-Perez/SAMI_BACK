@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.sami.sami_app.api.dto.request.ServiceEntityRequest;
+import com.sami.sami_app.api.dto.request.create.ServiceEntityRequest;
 import com.sami.sami_app.api.dto.response.AmbulanceResponse;
 import com.sami.sami_app.api.dto.response.HospitalBasicResponse;
 import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
