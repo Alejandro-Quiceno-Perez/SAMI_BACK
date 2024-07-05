@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sami.sami_app.api.dto.response.LocationsResponse;
-import com.sami.sami_app.api.dto.response.ServiceEntityResponse;
 import com.sami.sami_app.infrastructure.abstract_services.IMapService;
-import com.sami.sami_app.infrastructure.services.ServiceEntityService;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,7 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * MAP CONTROLLER
  * 
  * The map controller is in charge of all the management of capturing the
- * *location (latitude-longitude) of the service, ambulance and hospital.
+ * location (latitude-longitude) of the service, ambulance and hospital.
  */
 
 // SWAGGER
@@ -35,10 +34,7 @@ public class MapController {
     @Autowired
     private IMapService iMapService;
 
-    // inyects the service repository
-    @Autowired
-    private ServiceEntityService serviceEntityService;
-
+   
     // SWAGGER
     @Operation(summary = "Capture all service locations", description = "captures the latitude and longitude of the service, ambulance and hospital.")
     @ApiResponses(value = {

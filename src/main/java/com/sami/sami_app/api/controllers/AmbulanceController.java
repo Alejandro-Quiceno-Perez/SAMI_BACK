@@ -1,6 +1,6 @@
 package com.sami.sami_app.api.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sami.sami_app.api.dto.request.create.AmbulanceRequest;
 import com.sami.sami_app.api.dto.response.AmbulanceResponse;
-import com.sami.sami_app.infrastructure.abstract_services.IAmbulanceService;
-import com.sami.sami_app.util.enums.SortType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -48,9 +46,7 @@ import lombok.AllArgsConstructor;
 @CrossOrigin(origins = "*")
 public class AmbulanceController {
 
-    // dependency injection
-    @Autowired
-    private final IAmbulanceService iAmbulanceService;
+    
 
     // SWAGGER
     @Operation(summary = "Displays all ambulances with pagination", description = "Displays the ambulances in a list, it is configured to display 10 items per page.")

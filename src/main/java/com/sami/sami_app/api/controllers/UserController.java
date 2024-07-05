@@ -1,12 +1,11 @@
 package com.sami.sami_app.api.controllers;
 
-import com.sami.sami_app.util.enums.SortType;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sami.sami_app.api.dto.request.create.UserRequest;
 import com.sami.sami_app.api.dto.response.UserResponse;
-import com.sami.sami_app.infrastructure.abstract_services.IUserService;
+
 
 import lombok.AllArgsConstructor;
 
@@ -41,9 +40,7 @@ import lombok.AllArgsConstructor;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    //dependency injection
-    @Autowired
-    private final IUserService objIUserService;
+   
 
     //SWAGGER 
     @Operation(
